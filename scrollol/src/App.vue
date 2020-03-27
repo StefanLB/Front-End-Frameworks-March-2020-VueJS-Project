@@ -4,16 +4,19 @@
     <main class="py-4">
       <router-view></router-view>
     </main>
+    <app-footer></app-footer>
   </div>
 </template>
 
 
 <script>
 import AppHeader from './components/shared/Header.vue'
+import AppFooter from './components/shared/Footer.vue'
 
 export default {
   components: {
-    AppHeader
+    AppHeader,
+    AppFooter
   }
 };
 </script>
