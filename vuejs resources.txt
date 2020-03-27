@@ -1,0 +1,17 @@
+https://blog.logrocket.com/vue-firebase-authentication/
+https://savvyapps.com/blog/definitive-guide-building-web-app-vuejs-firebase
+https://github.com/k1r1L/VueJS-SoftUni/tree/master/vue-router-demo/src/components
+https://medium.com/javascript-in-plain-english/how-to-implement-a-showcase-web-app-in-vue-js-with-firebase-and-register-functionality-part-1-992089d17828
+https://www.jenniferbland.com/spa-application-using-vue-js-vuex-vuetify-and-firebase-part-1/
+https://github.com/ratracegrad/meal-prep
+https://www.jenniferbland.com/spa-application-using-vue-js-vuex-vuetify-and-firebase-part-2/
+https://www.jenniferbland.com/spa-application-using-vue-js-vuex-vuetify-and-firebase-part-3/
+https://www.jenniferbland.com/spa-application-using-vue-js-vuex-vuetify-and-firebase-part-4/
+https://school.geekwall.in/p/FH9eDuef/10-top-vuejs-boilerplates-for-2020
+https://github.com/davellanedam/vue-skeleton-mvp
+https://laptrinhx.com/seven-in-one-my-form-webapp-using-vuejs-vuetify-firebase-hosting-part-iv-1867379441/
+https://medium.com/@nabil.alanssi19/seven-in-one-my-form-webapp-using-vuejs-vuetify-firebase-hosting-part-ii-a8c478a69bf3
+https://medium.com/@nabil.alanssi19/seven-in-one-my-form-webapp-using-vuejs-vuetify-firebase-hosting-93bdaa4eafd5
+https://laptrinhx.com/link/?l=http%3A%2F%2Ftiny.cc%2FSevenInOnePart3
+https://heydesigner.com/how-to-build-an-spa-using-vue-js-vuex-vuetify-and-firebase-using-vue-router/
+https://www.freecodecamp.org/news/how-to-build-an-spa-using-vue-js-vuex-vuetify-and-firebase-using-vue-router-fc5bd065fe18/?ref=heydesigner
