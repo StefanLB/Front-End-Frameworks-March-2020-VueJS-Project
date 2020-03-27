@@ -4,10 +4,15 @@ import store from './store'
 import vuetify from './plugins/vuetify';
 import router from './router'
 import { firestorePlugin } from 'vuefire'
+import firebase from './firebase.js'
 
 Vue.use(firestorePlugin)
 
 Vue.config.productionTip = false
+
+firebase.auth.onAuthStateChanged(user => {
+  store.dispatch("fetchUser", user);
+});
 
 new Vue({
   store,
