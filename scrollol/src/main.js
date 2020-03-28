@@ -2,12 +2,13 @@ import Vue from 'vue'
 import './plugins/axios'
 import App from './App.vue'
 import store from './store'
-import vuetify from './plugins/vuetify';
+import vuetify from './plugins/vuetify'
 import router from './router'
 import { firestorePlugin } from 'vuefire'
 import firebase from './firebase.js'
 import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 Vue.use(firestorePlugin)
 

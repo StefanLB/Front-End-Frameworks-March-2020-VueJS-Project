@@ -18,11 +18,6 @@ const db = firebase.firestore();
 const auth = firebase.auth();
 const currentUser = auth.currentUser;
 
-const settings = {
-  timestampsInSnapshots: true
-};
-db.settings(settings);
-
 const usersCollection = db.collection("users");
 const lolsCollection = db.collection("lols");
 const commentsCollection = db.collection("comments");

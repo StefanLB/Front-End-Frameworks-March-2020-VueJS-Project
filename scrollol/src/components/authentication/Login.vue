@@ -1,4 +1,4 @@
-<template>
+<!--<template>
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-8">
@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import firebase from "firebase";
+
 
 export default {
   data() {
@@ -71,6 +71,70 @@ export default {
         .auth()
         .signInWithEmailAndPassword(this.form.email, this.form.password)
         .then(() => { // was data instead of ()
+          this.$router.replace({ name: "Home" });
+        })
+        .catch(err => {
+          this.error = err.message;
+        });
+    }
+  }
+};
+</script>
+-->
+
+<template>
+  <div id="login">
+    <section>
+      <div class="col1">
+        <h1>Scrollol</h1>
+      </div>
+      <div class="col2">
+        <div v-if="error" class="alert alert-danger">{{error}}</div>
+        <form action="#" @submit.prevent="submit">
+          <h4>Welcome, Stranger!</h4>
+          <p>Enter your credentials below in order to post, comment and upvote lols.</p>
+          <label for="email1">Email</label>
+          <input v-model.trim="form.email" type="text" placeholder="you@email.com" id="email1" />
+
+          <label for="password1">Password</label>
+          <input
+            v-model.trim="form.password"
+            type="password"
+            placeholder="******"
+            id="password1"
+          />
+
+          <button class="button">Log In</button>
+
+          <div class="extras">
+            <a>Create an Account</a>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+</template>
+
+<script>
+import firebase from "firebase";
+
+export default {
+  data() {
+    return {
+      form: {
+        email: "",
+        password: ""
+      },
+      error: null
+    };
+  },
+  methods: {
+    submit() {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.form.email, this.form.password)
+        .then(() => {
+          // was data instead of ()
           this.$router.replace({ name: "Home" });
         })
         .catch(err => {
