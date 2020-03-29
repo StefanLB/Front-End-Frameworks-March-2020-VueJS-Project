@@ -3,18 +3,18 @@
     <v-toolbar>
       <v-toolbar-items>
         <v-btn
-          flat
+          
             tag='span'
             style='cursor: pointer'
             >
-          SHOW CASE
+          ScrolLol
         </v-btn>
       </v-toolbar-items>
       <v-spacer></v-spacer>
 
       <!-- navigation bar links -->
       <v-toolbar-items class='hidden-xs-only' v-if="!userLogedIn">
-        <v-btn flat v-for="item in items" :key="item.title" :to="item.link">
+        <v-btn  v-for="item in items" :key="item.title" :to="item.link">
           <v-icon>{{item.icon}}</v-icon>{{item.title}}
         </v-btn>
         <v-spacer></v-spacer>
@@ -22,7 +22,7 @@
       <!-- sign out button -->
       <v-toolbar-items class='hidden-xs-only' v-else>
         <v-btn
-          flat @click='logoutFromFirebase'
+           @click='logoutFromFirebase'
           >
           <v-icon>delete_sweep</v-icon>Logout
         </v-btn>
