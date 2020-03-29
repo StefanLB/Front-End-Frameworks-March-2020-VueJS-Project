@@ -2,7 +2,7 @@
     <!-- display the navigation bar -->
     <v-toolbar>
       <v-toolbar-items>
-        <v-btn
+        <v-btn to="/home"
           
             tag='span'
             style='cursor: pointer'

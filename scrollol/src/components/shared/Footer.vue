@@ -29,7 +29,7 @@
         </v-btn>
       </v-card-title>
 
-      <v-card-text class="py-2 white--text text-center">
+      <v-card-text class="py-2 white--text text-center teal">
         © {{ new Date().getFullYear() }} Copyright: SoftUni Front-End Frameworks - Vue.js
         <p>
           <router-link to="/about" class="footer-nav">About |</router-link>
