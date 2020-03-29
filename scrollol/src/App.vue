@@ -21,3 +21,9 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+router-view {
+  padding:10px;
+}
+</style>

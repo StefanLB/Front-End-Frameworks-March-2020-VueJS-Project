@@ -1,5 +1,5 @@
 <template>
       <v-subheader>
-          Contact Component
+          All lols component
       </v-subheader>
 </template>

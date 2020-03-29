@@ -1,12 +1,14 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import firebase from 'firebase';
+import firebase from "firebase";
 
 import Home from "../components/Home.vue";
 import About from "../components/About.vue";
 import Contact from "../components/Contact.vue";
 import Login from "../components/authentication/Login.vue";
 import Register from "../components/authentication/Register.vue";
+import AllLols from "../components/lols/AllLols.vue";
+import AddLol from "../components/lols/AddLol.vue";
 
 Vue.use(VueRouter);
 
@@ -40,6 +42,16 @@ const routes = [
     path: "/register",
     name: "Register",
     component: Register
+  },
+  {
+    path: "/lols",
+    name: "AllLols",
+    component: AllLols    
+  },
+  {
+    path: "/lols/add",
+    name: "AddLol",
+    component: AddLol    
   },
   {
     path: "*",
