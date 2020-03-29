@@ -53,10 +53,18 @@ export default {
     validate() {
       if (this.$refs.form.validate()) {
         this.snackbar = true;
+        this.registerWithFirebase();
       }
     },
     reset() {
       this.$refs.form.reset();
+    },
+    registerWithFirebase() {
+      const user = {
+        email: this.email,
+        password: this.password
+      };
+      this.$store.dispatch("signUpAction", user);
     }
   }
 };
