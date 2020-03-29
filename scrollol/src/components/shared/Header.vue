@@ -42,3 +42,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.v-toolbar {
+  flex: 0
+}
+</style>
