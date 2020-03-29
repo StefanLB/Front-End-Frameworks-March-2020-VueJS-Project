@@ -2,7 +2,7 @@
   <v-app>
     <app-header></app-header>
     <app-loading></app-loading>
-    <router-view></router-view>
+    <router-view class="app-body"></router-view>
     <app-footer></app-footer>
   </v-app>
 </template>
@@ -23,7 +23,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-router-view {
-  padding:10px;
+.app-body {
+  margin-bottom: 120px;
 }
 </style>

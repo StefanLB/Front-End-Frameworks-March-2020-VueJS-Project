@@ -1,5 +1,5 @@
 <template>
-  <v-footer dark padless>
+  <v-footer class="v-footer" absolute dark padless>
     <v-card class="flex" flat tile justify-content: center>
       <v-card-title class="teal soc-icon">
         <v-btn class="mx-4" dark icon>
@@ -31,10 +31,9 @@
 
       <v-card-text class="py-2 white--text text-center teal">
         © {{ new Date().getFullYear() }} Copyright: SoftUni Front-End Frameworks - Vue.js
-        <p>
-          <router-link to="/about" class="footer-nav">About |</router-link>
-          <router-link to="/contact" class="footer-nav"> Contact Us</router-link>
-        </p>
+        <div>
+          <router-link to="/about" class="footer-nav">About |</router-link><router-link to="/contact" class="footer-nav"> Contact Us</router-link>
+        </div>
       </v-card-text>
     </v-card>
   </v-footer>
@@ -48,6 +47,7 @@ export default {};
 .soc-icon {
   justify-content: center;
   color: whitesmoke;
+  padding: 12px;
 }
 .footer-nav {
   color: whitesmoke;
