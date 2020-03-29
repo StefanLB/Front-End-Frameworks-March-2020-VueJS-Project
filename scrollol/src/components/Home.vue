@@ -1,6 +1,7 @@
 <template>
-  <div class="home">
-  </div>
+      <div class="d-flex align-center ml-5">
+        <span>Form WebApp</span>
+      </div>
 </template>
 
 <script>

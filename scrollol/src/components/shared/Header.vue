@@ -1,46 +1,63 @@
 <template>
-  <!-- display the navigation bar -->
-  <v-toolbar>
-    <v-toolbar-items>
-      <v-btn flat tag="span" style="cursor: pointer">SHOW CASE</v-btn>
-    </v-toolbar-items>
-    <v-spacer></v-spacer>
-    <!-- navigation bar links -->
-    <v-toolbar-items class="hidden-xs-only">
-      <v-btn flat v-for="item in items" :key="item.title" :to="item.link">
-        <v-icon>{{item.icon}}</v-icon>
-        {{item.title}}
-      </v-btn>
+    <!-- display the navigation bar -->
+    <v-toolbar>
+      <v-toolbar-items>
+        <v-btn
+          flat
+            tag='span'
+            style='cursor: pointer'
+            >
+          SHOW CASE
+        </v-btn>
+      </v-toolbar-items>
       <v-spacer></v-spacer>
-    </v-toolbar-items>
-    <!-- sign out button -->
-    <v-toolbar-items class="hidden-xs-only">
-      <v-btn flat>
-        <v-icon>delete_sweep</v-icon>Logout
-      </v-btn>
-    </v-toolbar-items>
-  </v-toolbar>
+
+      <!-- navigation bar links -->
+      <v-toolbar-items class='hidden-xs-only' v-if="!userLogedIn">
+        <v-btn flat v-for="item in items" :key="item.title" :to="item.link">
+          <v-icon>{{item.icon}}</v-icon>{{item.title}}
+        </v-btn>
+        <v-spacer></v-spacer>
+      </v-toolbar-items>
+      <!-- sign out button -->
+      <v-toolbar-items class='hidden-xs-only' v-else>
+        <v-btn
+          flat @click='logoutFromFirebase'
+          >
+          <v-icon>delete_sweep</v-icon>Logout
+        </v-btn>
+      </v-toolbar-items>
+    </v-toolbar>
 </template>
+
 <script>
 export default {
   computed: {
-    items() {
+    items () {
       let menuItems = [
         {
-          title: "Register",
-          icon: "face",
-          link: "/register"
+          title: 'Register',
+          icon: 'face',
+          link: '/register'
         },
         {
-          title: "Login",
-          icon: "no_encryption",
-          link: "/login"
+          title: 'Login',
+          icon: 'no_encryption',
+          link: '/login'
         }
-      ];
-      return menuItems;
+      ]
+      return menuItems
+    },
+    userLogedIn () {
+      return this.$store.getters.user
+    }
+  },
+  methods: {
+    logoutFromFirebase () {
+      this.$store.dispatch('signOutAction')
     }
   }
-};
+}
 </script>
 
 <style scoped>

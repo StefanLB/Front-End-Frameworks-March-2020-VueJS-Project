@@ -33,7 +33,6 @@
           </v-btn>
 
           <v-btn
-            class="error"
             color="error"
             @click="reset"
           >
