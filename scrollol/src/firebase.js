@@ -1,8 +1,6 @@
-import * as firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/firestore";
+import firebase from 'firebase';
 
-const firebaseConfig = {
+const configOptions = {
   apiKey: "AIzaSyAKZVxFy3M01CxvFfOq3cNeXlj_rxosYM0",
   authDomain: "scrollol.firebaseapp.com",
   databaseURL: "https://scrollol.firebaseio.com",
@@ -12,23 +10,12 @@ const firebaseConfig = {
   appId: "1:57334373708:web:dcc00ef2971549d7ba03e9"
 };
 
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(configOptions);
 
-const db = firebase.firestore();
-const auth = firebase.auth();
-const currentUser = auth.currentUser;
-
-const usersCollection = db.collection("users");
-const lolsCollection = db.collection("lols");
-const commentsCollection = db.collection("comments");
+export const db = firebase.firestore();
+export const lolsCollection = db.collection('lols');
 
 export default {
-  db,
-  auth,
-  currentUser,
-  usersCollection,
-  lolsCollection,
-  commentsCollection,
   loginGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase
