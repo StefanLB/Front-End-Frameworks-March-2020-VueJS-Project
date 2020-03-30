@@ -49,12 +49,11 @@ export default {
       return menuItems
     },
     userLogedIn () {
-      return this.$store.getters.user
+      return false;
     }
   },
   methods: {
     logoutFromFirebase () {
-      this.$store.dispatch('signOutAction')
     }
   }
 }

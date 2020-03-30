@@ -6,15 +6,8 @@
 
 <script>
 // @ is an alias to /src
-import { mapGetters } from "vuex";
 
 export default {
-  computed: {
-    // map `this.user` to `this.$store.getters.user`
-    ...mapGetters({
-      user: "user"
-    })
-  },
   data: () => ({
     })
 }

@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 
 const getters = {
   showLoading: state => state.showLoading
@@ -26,7 +25,7 @@ const state = {
 };
 
 export default {
-  computed: mapGetters(["showLoading"]),
+  // computed: mapGetters(["showLoading"]),
   state,
   getters,
   mutations

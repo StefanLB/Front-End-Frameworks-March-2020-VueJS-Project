@@ -3,6 +3,10 @@
     <v-layout row wrap>
       <v-flex>
         <v-form ref="form" v-model="valid" lazy-validation>
+          <v-text-field v-model="firstName" :rules="firstNameRules" label="First Name" required></v-text-field>
+
+          <v-text-field v-model="lastName" :rules="lastNameRules" label="Last Name" required></v-text-field>
+
           <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
 
           <v-text-field
@@ -17,7 +21,7 @@
 
           <v-text-field
             v-model="confirmPassword"
-            label="confirm Password"
+            label="Confirm Password"
             :rules="passwordRules"
             required
             :append-icon="confirmPasswordShow ? 'visibility' : 'visibility_off'"
@@ -35,11 +39,23 @@
 </template>
 
 <script>
+import { signUp } from "../../services/auth.service";
+
 export default {
   data: () => ({
     passwordShow: false,
     confirmPasswordShow: false,
     valid: true,
+    firstName: "",
+    firstNameRules: [
+      v => !!v || "First Name is required",
+      v => /.{3,}/.test(v) || "First Name must be at least 3 symbols long"
+    ],
+    lastName: "",
+    lastNameRules: [
+      v => !!v || "Last Name is required",
+      v => /.{3,}/.test(v) || "Last Name must be at least 3 symbols long"
+    ],
     email: "",
     emailRules: [
       v => !!v || "E-mail is required",
@@ -52,22 +68,23 @@ export default {
   methods: {
     validate() {
       if (this.$refs.form.validate()) {
-        this.snackbar = true;
         this.registerWithFirebase();
       }
     },
     reset() {
       this.$refs.form.reset();
     },
-    registerWithFirebase() {
-      const user = {
-        email: this.email,
-        password: this.password
-      };
-      this.$store.dispatch("signUpAction", user);
+    async registerWithFirebase() {
+        const user = {
+          firstName: this.firstName,
+          lastName: this.lastName,
+          email: this.email,
+          password: this.password
+        };
+        await signUp(user);
+      }
     }
-  }
-};
+  };
 </script>
 
 <style scoped>
