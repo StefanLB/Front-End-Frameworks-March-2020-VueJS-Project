@@ -8,39 +8,40 @@
     </form> -->
   <form>
     <v-text-field
-      v-model="name"
-      :error-messages="nameErrors"
-      :counter="10"
-      label="Name"
+      v-model="title"
+      :error-messages="titleErrors"
+      :counter="30"
+      label="Title"
       required
-      @input="$v.name.$touch()"
-      @blur="$v.name.$touch()"
+      @input="$v.title.$touch()"
+      @blur="$v.title.$touch()"
     ></v-text-field>
     <v-text-field
-      v-model="email"
-      :error-messages="emailErrors"
-      label="E-mail"
+      v-model="description"
+      :error-messages="descriptionErrors"
+      :counter="150"
+      label="Description"
       required
-      @input="$v.email.$touch()"
-      @blur="$v.email.$touch()"
+      @input="$v.description.$touch()"
+      @blur="$v.description.$touch()"
+    ></v-text-field>
+    <v-text-field
+      v-model="imageUrl"
+      :error-messages="imageUrlErrors"
+      label="Image URL"
+      required
+      @input="$v.imageUrl.$touch()"
+      @blur="$v.imageUrl.$touch()"
     ></v-text-field>
     <v-select
-      v-model="select"
+      v-model="category"
       :items="items"
-      :error-messages="selectErrors"
-      label="Item"
+      :error-messages="categoryErrors"
+      label="Category"
       required
-      @change="$v.select.$touch()"
-      @blur="$v.select.$touch()"
+      @change="$v.category.$touch()"
+      @blur="$v.category.$touch()"
     ></v-select>
-    <v-checkbox
-      v-model="checkbox"
-      :error-messages="checkboxErrors"
-      label="Do you agree?"
-      required
-      @change="$v.checkbox.$touch()"
-      @blur="$v.checkbox.$touch()"
-    ></v-checkbox>
 
     <v-btn class="mr-4" @click="submit">submit</v-btn>
     <v-btn @click="clear">clear</v-btn>
@@ -49,60 +50,62 @@
 
 <script>
   import { validationMixin } from 'vuelidate'
-  import { required, maxLength, email } from 'vuelidate/lib/validators'
+  import { required, minLength, maxLength } from 'vuelidate/lib/validators'
+  import { helpers } from 'vuelidate/lib/validators';
+  
+  const urlsyntax = helpers.regex('urlsyntax', /^http[s]{0,1}:\/\/.*$/);
 
   export default {
     mixins: [validationMixin],
-
     validations: {
-      name: { required, maxLength: maxLength(10) },
-      email: { required, email },
-      select: { required },
-      checkbox: {
-        checked (val) {
-          return val
-        },
-      },
+      title: { required, minLength: minLength(3) , maxLength: maxLength(30) },
+      description: { required, minLength: minLength(3) , maxLength: maxLength(150) },
+      imageUrl: { required,  urlsyntax},
+      category: { required }
     },
 
     data: () => ({
-      name: '',
-      email: '',
-      select: null,
+      title: '',
+      description: '',
+      imageUrl: '',
+      category: null,
       items: [
-        'Item 1',
-        'Item 2',
-        'Item 3',
-        'Item 4',
-      ],
-      checkbox: false,
+        'Funny',
+        'Animals',
+        'Art',
+        'Games',
+        'Nature'
+      ]
     }),
 
     computed: {
-      checkboxErrors () {
+      categoryErrors () {
         const errors = []
-        if (!this.$v.checkbox.$dirty) return errors
-        !this.$v.checkbox.checked && errors.push('You must agree to continue!')
+        if (!this.$v.category.$dirty) return errors
+        !this.$v.category.required && errors.push('Category is required')
         return errors
       },
-      selectErrors () {
+      titleErrors () {
         const errors = []
-        if (!this.$v.select.$dirty) return errors
-        !this.$v.select.required && errors.push('Item is required')
+        if (!this.$v.title.$dirty) return errors
+        !this.$v.title.maxLength && errors.push('Title must be at most 30 characters long')
+        !this.$v.title.minLength && errors.push('Title must be at least 3 characters long')
+        !this.$v.title.required && errors.push('Title is required.')
         return errors
       },
-      nameErrors () {
+      descriptionErrors () {
         const errors = []
-        if (!this.$v.name.$dirty) return errors
-        !this.$v.name.maxLength && errors.push('Name must be at most 10 characters long')
-        !this.$v.name.required && errors.push('Name is required.')
+        if (!this.$v.description.$dirty) return errors
+        !this.$v.description.maxLength && errors.push('Description must be at most 30 characters long')
+        !this.$v.description.minLength && errors.push('Description must be at least 3 characters long')
+        !this.$v.description.required && errors.push('Description is required.')
         return errors
       },
-      emailErrors () {
+      imageUrlErrors () {
         const errors = []
-        if (!this.$v.email.$dirty) return errors
-        !this.$v.email.email && errors.push('Must be valid e-mail')
-        !this.$v.email.required && errors.push('E-mail is required')
+        if (!this.$v.imageUrl.$dirty) return errors
+        !this.$v.imageUrl.urlsyntax && errors.push('Image Url must start with http(s)://')
+        !this.$v.imageUrl.required && errors.push('Image Url is required')
         return errors
       },
     },
@@ -113,10 +116,10 @@
       },
       clear () {
         this.$v.$reset()
-        this.name = ''
-        this.email = ''
+        this.title = ''
+        this.description = ''
+        this.imageUrl = ''
         this.select = null
-        this.checkbox = false
       },
     },
   }
