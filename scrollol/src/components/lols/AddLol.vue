@@ -44,55 +44,6 @@
 
     <v-btn class="mr-4" @click="submit">submit</v-btn>
     <v-btn @click="clear">clear</v-btn>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
-  <div>adawdw</div>
   </form>
 </template>
 
