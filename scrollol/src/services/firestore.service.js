@@ -13,6 +13,10 @@ export function getUsersCollection() {
     return firestore.collection('users');
 }
 
+export function getLoggedInUser() {
+    return auth.currentUser;
+}
+
 export function getUser(id) {
     return getUsersCollection().doc(id);
 }

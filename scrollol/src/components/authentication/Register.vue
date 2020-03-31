@@ -29,7 +29,7 @@
             @click:append="confirmPasswordShow = !confirmPasswordShow"
           ></v-text-field>
 
-          <v-btn :disabled="!valid" color="success" @click="validate">Register</v-btn>
+          <v-btn :disabled="!valid" color="success" @click="validateAndRegister">Register</v-btn>
 
           <v-btn class="error" color="error" @click="reset">Reset Form</v-btn>
         </v-form>
@@ -66,9 +66,10 @@ export default {
     passwordRules: [v => !!v || "Password and Confirm password Required"]
   }),
   methods: {
-    validate() {
+    validateAndRegister() {
       if (this.$refs.form.validate()) {
         this.registerWithFirebase();
+        this.reset();
       }
     },
     reset() {
