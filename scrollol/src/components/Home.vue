@@ -1,14 +1,25 @@
 <template>
       <div class="d-flex align-center ml-5">
         <h2>Home Component</h2>
+        <all-lols :lols="lols"></all-lols>
       </div>
 </template>
 
 <script>
-// @ is an alias to /src
+import { getLols } from "../services/firestore.service";
+import AllLols from "./lols/AllLols" ;
 
 export default {
-  data: () => ({
-    })
-}
+  name: "Home",
+  components: { AllLols },
+  data: function() {
+    return {
+      size: 520,
+      lols: []
+    };
+  },
+  created: function() {
+    this.$bind("lols", getLols());
+  }
+};
 </script>
