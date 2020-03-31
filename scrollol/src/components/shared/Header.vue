@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import auth from "../../firebase"
+import firebase from "firebase/app"
 
 export default {
   data(){
@@ -63,10 +63,14 @@ export default {
   },
   methods: {
     logoutFromFirebase () {
+      firebase.auth().signOut()
+      .then(function() {})
+      .catch(function(error) {
+        console.log(error)});
     }
   },
   mounted: function() {
-    auth.onAuthStateChanged( user => {
+    firebase.auth().onAuthStateChanged( user => {
       if(user) {
         this.user.loggedIn = true;
         this.user.data = user;
