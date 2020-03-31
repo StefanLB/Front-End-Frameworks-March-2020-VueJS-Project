@@ -45,7 +45,7 @@
 import { validationMixin } from "vuelidate";
 import { required, minLength, maxLength } from "vuelidate/lib/validators";
 import { helpers } from "vuelidate/lib/validators";
-import { lolsCollection } from "../../firebase";
+import { addLol } from "../../services/firestore.service";
 
 const urlsyntax = helpers.regex("urlsyntax", /^http[s]{0,1}:\/\/.*$/);
 
@@ -110,36 +110,26 @@ export default {
   methods: {
     submit() {
       const currentDate = new Date();
+      const lolData = {
+        title: this.title,
+        description: this.description,
+        imageUrl: this.imageUrl,
+        category: this.category,
+        likes: [],
+        dislikes: [],
+        comments: [],
+        createdOn: currentDate,
+        updatedOn: currentDate
+      };
 
-      console.log(lolsCollection.data);
-      console.log(lolsCollection);
-
-      lolsCollection
-        .add({
-          title: this.title,
-          description: this.description,
-          imageUrl: this.imageUrl,
-          category: this.category,
-          likes: [],
-          dislikes: [],
-          comments: [
-            {
-              content: "testComment",
-              postedBy: "testUser",
-              postedOn: currentDate
-            }
-          ],
-          createdOn: currentDate,
-          updatedOn: currentDate
-        })
-        .then(function(docRef) {
-          console.log(docRef);
-          console.log("Document written with ID: ", docRef.id);
+      addLol(lolData)
+        .then(() => {
+          console.log("Lol successfully created!");
+          this.clear();
         })
         .catch(function(error) {
-          console.error("Error adding document: ", error);
+          console.log("Error creating Lol!" + error);
         });
-      this.clear();
     },
     clear() {
       this.$v.$reset();

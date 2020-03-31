@@ -1,5 +1,17 @@
 import { auth, firestore } from "../firebase";
-import firebase from 'firebase/app';
+//import firebase from 'firebase/app';
+
+export function getLols() {
+    return firestore.collection('lols');
+}
+
+export async function addLol(lol) {
+    if (auth.currentUser) {
+        lol.addedBy = auth.currentUser.uid;
+        return await getLols().add(lol);
+    }
+    return null;
+}
 
 export async function setUserData(data) {
     return await setData(data, `users/${data.uid}`);
@@ -33,34 +45,19 @@ export function searchUserByName(name) {
     return getUsersCollection().where('firstName', '>=', name).limit(5);
 }
 
-export function getProjects() {
-    return firestore.collection('projects');
+
+export function getLol(id) {
+    return getLols().doc(id);
 }
 
-export function getProjectsByName(name) {
-    return getProjects().where('name', '>=', name);
+export function getLolsByCreator(id) {
+    return firestore.collection('lols').where('addedBy', '==', id);
 }
 
-export function getProject(id) {
-    return getProjects().doc(id);
-}
-
-export function getProjectsByCreator(id) {
-    return firestore.collection('projects').where('creator', '==', id);
-}
-
-export function getMyProjects() {
+export function getMyLols() {
     if (auth.currentUser) {
         const uid = auth.currentUser.uid;
-        return getProjectsByCreator(uid);
-    }
-    return null;
-}
-
-export function getProjectsWhereIAmMember() {
-    if (auth.currentUser) {
-        const uid = auth.currentUser.uid;
-        return getProjects().where('members', 'array-contains', uid);
+        return getLolsByCreator(uid);
     }
     return null;
 }
@@ -73,57 +70,11 @@ function updateOneFieldFromProfile(field, data) {
     return getMyProfile().update({ [field]: data });
 }
 
-export async function updateFieldFromProject(id, field, value) {
-    return getProject(id).update({ [field]: value });
-}
-
-export async function updateDiaryFromProject(id, value) {
-    if (auth.currentUser) {
-        const newMessage = {
-            user: auth.currentUser.uid,
-            text: value,
-            timestamp: new Date()
-        }
-
-        return await getProject(id).update({
-            diary: firebase.firestore.FieldValue.arrayUnion(newMessage)
-        });
-    }
-}
-
-export async function updateMembersFromProject(id, value) {
-    if (auth.currentUser) {
-        const ref = getProject(id);
-        return await ref.update({
-            members: firebase.firestore.FieldValue.arrayUnion(value)
-        }).then(() => {
-            ref.update({
-                requests: firebase.firestore.FieldValue.arrayRemove(value)
-            })
-        });
-    }
-}
-
-export function makeRequestToBeMember(id) {
-    if (auth.currentUser) {
-        const uid = auth.currentUser.uid;
-        return getProject(id).update({
-            requests: firebase.firestore.FieldValue.arrayUnion(uid)
-        });
-    }
-    return null;
+export async function updateFieldFromLol(id, field, value) {
+    return getLol(id).update({ [field]: value });
 }
 
 export async function updateNames(first, last) {
     updateOneFieldFromProfile('firstName', first);
     updateOneFieldFromProfile('lastName', last);
-}
-
-export async function createProject(project) {
-    if (auth.currentUser) {
-        project.creator = auth.currentUser.uid;
-        project.members.push(auth.currentUser.uid);
-        return await getProjects().doc(project.id).set(project);
-    }
-    return null;
 }

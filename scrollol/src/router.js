@@ -9,7 +9,7 @@ import Register from "./components/authentication/Register.vue";
 import AllLols from "./components/lols/AllLols.vue";
 import AddLol from "./components/lols/AddLol.vue";
 
-import { auth } from "./firebase"
+import { auth } from "./firebase";
 
 Vue.use(VueRouter);
 
@@ -52,7 +52,10 @@ const routes = [
   {
     path: "/lols/add",
     name: "AddLol",
-    component: AddLol
+    component: AddLol,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "*",
@@ -60,11 +63,6 @@ const routes = [
     component: Home
   }
 ];
-
-// WHEN YOU REACH A PATH WHICH REQUIRES AUTHENTICATION, ADD THE BELOW META
-// meta: {
-//   requiresAuth: true
-// }
 
 export const router = new VueRouter({
   mode: "history",
@@ -75,9 +73,8 @@ export const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(x => x.meta.requiresAuth);
   if (requiresAuth) {
-    auth.onAuthStateChanged(u => u ? next() : next('/'));
+    auth.onAuthStateChanged(u => (u ? next() : next("/")));
   } else {
     next();
   }
 });
-
