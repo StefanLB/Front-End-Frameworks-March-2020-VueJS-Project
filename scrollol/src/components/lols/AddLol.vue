@@ -28,7 +28,7 @@
     ></v-text-field>
     <v-select
       v-model="category"
-      :items="items"
+      :items="categories.map(c => c.category)"
       :error-messages="categoryErrors"
       label="Category"
       required
@@ -46,6 +46,7 @@ import { validationMixin } from "vuelidate";
 import { required, minLength, maxLength } from "vuelidate/lib/validators";
 import { helpers } from "vuelidate/lib/validators";
 import { addLol } from "../../services/firestore.service";
+import { getCategories } from "../../services/firestore.service";
 
 const urlsyntax = helpers.regex("urlsyntax", /^http[s]{0,1}:\/\/.*$/);
 
@@ -61,15 +62,13 @@ export default {
     imageUrl: { required, urlsyntax },
     category: { required }
   },
-
   data: () => ({
     title: "",
     description: "",
     imageUrl: "",
     category: null,
-    items: ["Funny", "Animals", "Art", "Games", "Nature"]
+    categories: []
   }),
-
   computed: {
     categoryErrors() {
       const errors = [];
@@ -106,7 +105,6 @@ export default {
       return errors;
     }
   },
-
   methods: {
     submit() {
       const currentDate = new Date();
@@ -138,6 +136,9 @@ export default {
       this.imageUrl = "";
       this.select = null;
     }
+  },
+  created: function() {
+    this.$bind("categories", getCategories());
   }
 };
 </script>

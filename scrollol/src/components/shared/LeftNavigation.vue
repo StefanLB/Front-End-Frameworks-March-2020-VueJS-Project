@@ -9,35 +9,26 @@
         class="left-nav"
         dark
       >
-        <v-list
-          dense
-          nav
-          class="py-0"
-        >
-          <v-list-item two-line>
-            <v-list-item-avatar>
-              <img src="https://www.yourfirstpatient.com/assets/default-user-avatar-thumbnail@2x-ad6390912469759cda3106088905fa5bfbadc41532fbaa28237209b1aa976fc9.png">
-            </v-list-item-avatar>
+        <v-list dense nav class="py-0">
+          <v-list-item class="categories">
+            <v-list-item-icon>
+              <v-icon>mdi-grid</v-icon>
+            </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title>Application</v-list-item-title>
-              <v-list-item-subtitle>Subtext</v-list-item-subtitle>
+              <v-list-item-title>CATEGORIES</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
           <v-divider></v-divider>
 
-          <v-list-item
-            v-for="item in items"
-            :key="item.title"
-            link
-          >
+          <v-list-item v-for="item in categories" :key="item.title" link>
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
+              <v-list-item-title>{{ item.category }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -47,29 +38,27 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        drawer: true,
-        items: [
-          { title: 'Dashboard', icon: 'mdi-view-dashboard' },
-          { title: 'Photos', icon: 'mdi-image' },
-          { title: 'About', icon: 'mdi-help-box' },
-        ],
-        color: 'teal',
-      }
-    }
+import { getCategories } from "../../services/firestore.service";
+
+export default {
+  data() {
+    return {
+      drawer: true,
+      categories: []
+    };
+  },
+  created: function() {
+    this.$bind("categories", getCategories());
   }
+};
 </script>
 
 <style lang="scss" scoped>
 .left-nav {
-    margin-top: 48px;
+  margin-top: 48px;
 }
 
-// @media ()
-// <style>
-// .container {
-//     max-width: 1185px;
-// }
+.categories {
+  margin-top: 20px;
+}
 </style>

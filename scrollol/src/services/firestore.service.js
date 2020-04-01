@@ -5,6 +5,10 @@ export function getLols() {
     return firestore.collection('lols');
 }
 
+export function getCategories() {
+    return firestore.collection('categories').orderBy('category');
+}
+
 export async function addLol(lol) {
     if (auth.currentUser) {
         lol.addedBy = auth.currentUser.uid;
