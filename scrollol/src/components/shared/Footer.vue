@@ -39,10 +39,6 @@
   </v-footer>
 </template>
 
-<script>
-export default {};
-</script>
-
 <style scoped lang="scss">
 .soc-icon {
   justify-content: center;
