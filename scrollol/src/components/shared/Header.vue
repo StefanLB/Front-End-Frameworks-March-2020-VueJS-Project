@@ -1,6 +1,6 @@
 <template>
   <!-- display the navigation bar -->
-  <v-toolbar>
+  <v-app-bar dense fixed>
     <v-toolbar-items>
       <v-btn to="/home" tag="span" style="cursor: pointer">ScrolLol</v-btn>
     </v-toolbar-items>
@@ -20,10 +20,14 @@
         <v-icon>delete_sweep</v-icon>Logout
       </v-btn>
     </v-toolbar-items>
-  </v-toolbar>
+  </v-app-bar>
 </template>
 
+
 <script>
+
+//TODO: USE v-app-bar elements
+
 import firebase from "firebase/app"
 
 export default {

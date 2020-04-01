@@ -1,6 +1,5 @@
 <template>
       <div class="d-flex align-center ml-5">
-        <h2>Home Component</h2>
         <all-lols :lols="lols"></all-lols>
       </div>
 </template>
