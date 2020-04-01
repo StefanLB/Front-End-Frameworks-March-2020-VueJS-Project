@@ -1,16 +1,16 @@
 <template>
-      <div class="d-flex align-center ml-5">
-        <all-lols :lols="lols"></all-lols>
+      <div class="d-flex align-center ml-5 all-lols">
+        <app-all-lols :lols="lols"></app-all-lols>
       </div>
 </template>
 
 <script>
 import { getLols } from "../services/firestore.service";
-import AllLols from "./lols/AllLols" ;
+import AppAllLols from "./lols/AllLols" ;
 
 export default {
   name: "Home",
-  components: { AllLols },
+  components: { AppAllLols },
   data: function() {
     return {
       size: 520,
@@ -22,3 +22,10 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.all-lols {
+  justify-content: space-evenly;
+  margin-top: 48px;
+}
+</style>

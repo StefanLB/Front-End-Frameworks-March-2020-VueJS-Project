@@ -69,7 +69,7 @@ export default {
 // }
 
 .list {
-  float: right;
+//   float: right;
   width: 98%;
 }
 
