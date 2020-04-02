@@ -2,7 +2,7 @@ import { auth, firestore } from "../firebase";
 //import firebase from 'firebase/app';
 
 export function getLols() {
-    return firestore.collection('lols');
+        return firestore.collection('lols');
 }
 
 export function getCategories() {

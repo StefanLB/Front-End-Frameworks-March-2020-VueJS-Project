@@ -23,13 +23,25 @@
 
           <v-divider></v-divider>
 
-          <v-list-item v-for="item in categories" :key="item.title" link>
+          <v-list-item v-for="item in categories" :key="item.category" @click="addFilter(item.category)">
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-icon>
 
             <v-list-item-content>
               <v-list-item-title>{{ item.category }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-divider></v-divider>
+
+          <v-list-item @click="addFilter(null)">
+            <v-list-item-icon>
+              <v-icon>mdi-filter-remove</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>Clear Filter</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -45,11 +57,17 @@ export default {
   data() {
     return {
       drawer: true,
-      categories: []
+      categories: [],
+      categoryFilter: null
     };
   },
   created: function() {
     this.$bind("categories", getCategories());
+  },
+  methods: {
+      addFilter(category) {
+          this.$emit('add-filter', category);
+      }
   }
 };
 </script>
@@ -57,6 +75,7 @@ export default {
 <style lang="scss" scoped>
 .left-nav {
   margin-top: 48px;
+  background: linear-gradient(to bottom, #00796B, #009688);
 }
 
 .categories {
