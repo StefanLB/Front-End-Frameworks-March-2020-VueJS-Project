@@ -24,8 +24,8 @@ export default {
       filterCategory: null 
     };
   },
-  created: function() {
-    this.$bind("lols", getLols());
+  created: async function() {
+    this.$bind("lols", await getLols());
   },
   methods: {
     addFilter(category) {

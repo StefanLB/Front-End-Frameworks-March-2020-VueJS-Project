@@ -4,7 +4,7 @@
     <div class="color"></div>
     <div class="list" v-for="lol of lols" :key="lol.id" :to="'/comments/' + lol.id">
       <div v-if="matchesCategory(lol.category)">
-        <v-card  class="d-inline-block mx-auto list-item">
+        <v-card class="d-inline-block mx-auto list-item">
           <v-container>
             <v-row justify="space-between">
               <v-col cols="auto">
@@ -16,21 +16,25 @@
                   <v-col class="px-0"></v-col>
                   <v-col class="px-0">
                     <v-btn icon>
-                      <v-icon color="green darken-2">thumb_up</v-icon>
+                      <v-icon
+                        v-bind:style="{ color: userInvolved(lol.likes) ? '#1B5E20' : '#81C784'}"
+                      >thumb_up</v-icon>
                       <div class="counter">{{lol.likes.length}}</div>
                     </v-btn>
                   </v-col>
 
                   <v-col class="px-0">
                     <v-btn icon>
-                      <v-icon color="red darken-2">thumb_down</v-icon>
+                      <v-icon v-bind:style="{ color: userInvolved(lol.dislikes) ? '#B71C1C' : '#E57373'}"
+                      >thumb_down</v-icon>
                       <div class="counter">{{lol.dislikes.length}}</div>
                     </v-btn>
                   </v-col>
 
                   <v-col class="px-0">
                     <v-btn icon>
-                      <v-icon color="blue darken-2">comment</v-icon>
+                      <v-icon v-bind:style="{ color: userInvolved(lol.comments) ? '#0D47A1' : '#64B5F6'}"
+                      >comment</v-icon>
                       <div class="counter">{{lol.comments.length}}</div>
                     </v-btn>
                   </v-col>
@@ -48,9 +52,18 @@
 
 <script>
 import moment from "moment";
+import firebase from "firebase/app";
 
 export default {
   name: "AllLols",
+  data() {
+    return {
+      user: {
+        loggedIn: false,
+        id: String
+      }
+    };
+  },
   props: {
     lols: Array,
     filterCategory: String
@@ -61,7 +74,30 @@ export default {
     },
     matchesCategory(category) {
       return this.filterCategory ? category == this.filterCategory : true;
+    },
+    userActivity() {
+      return true;
+    },
+    userInvolved(collection) {
+      console.log(collection);
+      console.log(this.user.loggedIn);
+      console.log(this.user.id);
+      if (this.user.loggedIn && collection) {
+        return collection.indexOf(this.user.id) > -1;
+      }
+      return false;
     }
+  },
+  mounted: function() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.user.loggedIn = true;
+        this.user.id = user.uid;
+      } else {
+        this.user.loggedIn = false;
+        this.user.id = null;
+      }
+    });
   }
 };
 </script>
