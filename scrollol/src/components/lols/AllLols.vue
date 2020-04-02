@@ -15,7 +15,7 @@
                 <v-row class="flex-column ma-0 fill-height" justify="center">
                   <v-col class="px-0"></v-col>
                   <v-col class="px-0">
-                    <v-btn icon>
+                    <v-btn icon @click="likeDislike('like', lol.id)">
                       <v-icon
                         v-bind:style="{ color: userInvolved(lol.likes) ? '#1B5E20' : '#81C784'}"
                       >thumb_up</v-icon>
@@ -24,8 +24,9 @@
                   </v-col>
 
                   <v-col class="px-0">
-                    <v-btn icon>
-                      <v-icon v-bind:style="{ color: userInvolved(lol.dislikes) ? '#B71C1C' : '#E57373'}"
+                    <v-btn icon @click="likeDislike('dislike', lol.id)">
+                      <v-icon
+                        v-bind:style="{ color: userInvolved(lol.dislikes) ? '#B71C1C' : '#E57373'}"
                       >thumb_down</v-icon>
                       <div class="counter">{{lol.dislikes.length}}</div>
                     </v-btn>
@@ -33,7 +34,8 @@
 
                   <v-col class="px-0">
                     <v-btn icon>
-                      <v-icon v-bind:style="{ color: userInvolved(lol.comments) ? '#0D47A1' : '#64B5F6'}"
+                      <v-icon
+                        v-bind:style="{ color: userInvolved(lol.comments) ? '#0D47A1' : '#64B5F6'}"
                       >comment</v-icon>
                       <div class="counter">{{lol.comments.length}}</div>
                     </v-btn>
@@ -51,6 +53,8 @@
 </template>
 
 <script>
+import { like } from "../../services/firestore.service";
+import { dislike } from "../../services/firestore.service";
 import moment from "moment";
 import firebase from "firebase/app";
 
@@ -79,13 +83,19 @@ export default {
       return true;
     },
     userInvolved(collection) {
-      console.log(collection);
-      console.log(this.user.loggedIn);
-      console.log(this.user.id);
       if (this.user.loggedIn && collection) {
         return collection.indexOf(this.user.id) > -1;
       }
       return false;
+    },
+    likeDislike(action, lolId) {
+      if (this.user.loggedIn && action == "like") {
+        like(lolId, this.user.id);
+      } else if (this.user.loggedIn && action == "dislike") {
+        dislike(lolId, this.user.id);
+      }
+
+      //TODO : if not logged in - notify user to log in
     }
   },
   mounted: function() {

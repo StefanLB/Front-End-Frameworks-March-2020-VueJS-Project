@@ -1,6 +1,15 @@
 import { auth, firestore } from "../firebase";
 //import firebase from 'firebase/app';
 
+export function like(lolId, userId) {
+    console.log('like ' + lolId);
+    console.log(userId);
+}
+
+export function dislike(lolId, userId) {
+    console.log('dislike ' + lolId + userId);
+}
+
 export function getLols() {
         return firestore.collection('lols');
 }
