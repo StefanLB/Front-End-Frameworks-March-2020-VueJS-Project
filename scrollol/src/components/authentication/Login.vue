@@ -15,18 +15,19 @@
             @click:append="passwordShow = !passwordShow"
           ></v-text-field>
 
-          <v-btn :disabled="!valid" color="success" @click="validateAndLogin">Login</v-btn>
-
-          <v-btn color="error" @click="reset">Reset Form</v-btn>
+              <v-btn :disabled="!valid" color="success" @click="validateAndLogin">Login</v-btn>
+              <v-btn color="error" @click="reset">Reset Form</v-btn>
+              <v-btn style="float: right;" color="primary" @click="loginGoogle">
+                <v-icon>mdi-google</v-icon>Login with Google
+              </v-btn>
         </v-form>
       </v-flex>
     </v-layout>
   </v-container>
-  
 </template>
 
 <script>
-import { signIn } from "../../services/auth.service";
+import { signIn, signInGoogle } from "../../services/auth.service";
 
 export default {
   data: () => ({
@@ -52,6 +53,9 @@ export default {
     },
     async loginWithFirebase() {
       await signIn(this.email, this.password);
+    },
+    loginGoogle() {
+      signInGoogle();
     }
   }
 };

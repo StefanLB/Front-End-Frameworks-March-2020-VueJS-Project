@@ -1,4 +1,5 @@
 import { auth } from "./../firebase";
+import { authGoogle } from "./../firebase";
 import { router } from "./../router";
 import { setUserData } from "./firestore.service";
 import { changeLoaderState } from "./loader.service";
@@ -23,12 +24,14 @@ export async function signUp(userdata) {
       const data = {
         uid: d.user.uid,
         firstName: userdata.firstName,
-        lastName: userdata.lastName,
+        lastName: userdata.lastName
       };
 
       setUserData(data);
       auth.currentUser.displayName = userdata.firstName;
-      auth.currentUser.updateProfile({displayName: userdata.firstName}).then(router.push('/'));
+      auth.currentUser
+        .updateProfile({ displayName: userdata.firstName })
+        .then(router.push("/"));
     })
     .finally(() => {
       changeLoaderState();
@@ -47,4 +50,16 @@ export async function logOut() {
     });
 }
 
-    //firebase.auth().currentUser.updateProfile({displayName: 'TESTDISPLAYNAME'});
+export async function signInGoogle() {
+  const provider = new authGoogle.GoogleAuthProvider();
+  
+  auth
+    .signInWithPopup(provider)
+    .then(function(result) {
+      console.log(result);
+      router.push("/");
+    })
+    .catch(() => {
+      console.log("Error Logging in!");
+    });
+}
