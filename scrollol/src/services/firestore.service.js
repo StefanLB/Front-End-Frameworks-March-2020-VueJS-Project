@@ -1,93 +1,126 @@
 import { auth, firestore } from "../firebase";
 //import firebase from 'firebase/app';
 
-export function like(lolId, userId) {
-    console.log('like ' + lolId);
-    console.log(userId);
+addLike, removeLike, addDislike, removeDislike;
+
+export function addLike(lolId, likes, userId) {
+  likes.push(userId);
+
+  firestore
+    .collection("lols")
+    .doc(lolId)
+    .update({ ["likes"]: likes });
 }
 
-export function dislike(lolId, userId) {
-    console.log('dislike ' + lolId + userId);
+export function removeLike(lolId, likes, userId) {
+  console.log(likes);
+
+  const updatedLikes = likes.filter(l => l != userId);
+  console.log(updatedLikes);
+
+  firestore
+    .collection("lols")
+    .doc(lolId)
+    .update({ ["likes"]: updatedLikes });
+}
+
+export function addDislike(lolId, dislikes, userId) {
+  dislikes.push(userId);
+
+  firestore
+    .collection("lols")
+    .doc(lolId)
+    .update({ ["dislikes"]: dislikes });
+}
+
+export function removeDislike(lolId, dislikes, userId) {
+  const updatedDislikes = dislikes.filter(l => l != userId);
+
+  firestore
+    .collection("lols")
+    .doc(lolId)
+    .update({ ["dislikes"]: updatedDislikes });
 }
 
 export function getLols() {
-        return firestore.collection('lols');
+  return firestore.collection("lols");
 }
 
 export function getCategories() {
-    return firestore.collection('categories').orderBy('category');
+  return firestore.collection("categories").orderBy("category");
 }
 
 export async function addLol(lol) {
-    if (auth.currentUser) {
-        lol.addedBy = auth.currentUser.uid;
-        return await getLols().add(lol);
-    }
-    return null;
+  if (auth.currentUser) {
+    lol.addedBy = auth.currentUser.uid;
+    return await getLols().add(lol);
+  }
+  return null;
 }
 
 export async function setUserData(data) {
-    return await setData(data, `users/${data.uid}`);
+  return await setData(data, `users/${data.uid}`);
 }
 
 export async function setProject(data) {
-    return await setData(data, `projects/${data.id}`);
+  return await setData(data, `projects/${data.id}`);
 }
 
 export function getUsersCollection() {
-    return firestore.collection('users');
+  return firestore.collection("users");
 }
 
 export function getLoggedInUser() {
-    return auth.currentUser;
+  return auth.currentUser;
 }
 
 export function getUser(id) {
-    return getUsersCollection().doc(id);
+  return getUsersCollection().doc(id);
 }
 
 export function getMyProfile() {
-    if (auth.currentUser) {
-        const uid = auth.currentUser.uid;
-        return getUsersCollection().doc(uid);
-    }
-    return null;
+  if (auth.currentUser) {
+    const uid = auth.currentUser.uid;
+    return getUsersCollection().doc(uid);
+  }
+  return null;
 }
 
 export function searchUserByName(name) {
-    return getUsersCollection().where('firstName', '>=', name).limit(5);
+  return getUsersCollection()
+    .where("firstName", ">=", name)
+    .limit(5);
 }
 
-
 export function getLol(id) {
-    return getLols().doc(id);
+  return getLols().doc(id);
 }
 
 export function getLolsByCreator(id) {
-    return firestore.collection('lols').where('addedBy', '==', id);
+  return firestore.collection("lols").where("addedBy", "==", id);
 }
 
 export function getMyLols() {
-    if (auth.currentUser) {
-        const uid = auth.currentUser.uid;
-        return getLolsByCreator(uid);
-    }
-    return null;
+  if (auth.currentUser) {
+    const uid = auth.currentUser.uid;
+    return getLolsByCreator(uid);
+  }
+  return null;
 }
 
 async function setData(data, ref) {
-    return await firestore.doc(ref).set(data);
+  return await firestore.doc(ref).set(data);
 }
 
 function updateOneFieldFromProfile(field, data) {
-    return getMyProfile().update({ [field]: data });
+  return getMyProfile().update({ [field]: data });
 }
 
 export async function updateFieldFromLol(id, field, value) {
-    return getLol(id).update({ [field]: value });
+  return getLol(id).update({ [field]: value });
 }
 
 export async function updateNames(first, last) {
-    updateOneFieldFromProfile('firstName', first);
-    updateOneFieldFromProfile('lastName', last);
+  updateOneFieldFromProfile("firstName", first);
+  updateOneFieldFromProfile("lastName", last);
 }

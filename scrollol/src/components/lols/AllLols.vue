@@ -15,7 +15,7 @@
                 <v-row class="flex-column ma-0 fill-height" justify="center">
                   <v-col class="px-0"></v-col>
                   <v-col class="px-0">
-                    <v-btn icon @click="likeDislike('like', lol.id)">
+                    <v-btn icon @click="likeLol(lol)">
                       <v-icon
                         v-bind:style="{ color: userInvolved(lol.likes) ? '#1B5E20' : '#81C784'}"
                       >thumb_up</v-icon>
@@ -24,7 +24,7 @@
                   </v-col>
 
                   <v-col class="px-0">
-                    <v-btn icon @click="likeDislike('dislike', lol.id)">
+                    <v-btn icon @click="dislikeLol(lol)">
                       <v-icon
                         v-bind:style="{ color: userInvolved(lol.dislikes) ? '#B71C1C' : '#E57373'}"
                       >thumb_down</v-icon>
@@ -53,8 +53,7 @@
 </template>
 
 <script>
-import { like } from "../../services/firestore.service";
-import { dislike } from "../../services/firestore.service";
+import { addLike, removeLike, addDislike, removeDislike } from "../../services/firestore.service";
 import moment from "moment";
 import firebase from "firebase/app";
 
@@ -88,13 +87,38 @@ export default {
       }
       return false;
     },
-    likeDislike(action, lolId) {
-      if (this.user.loggedIn && action == "like") {
-        like(lolId, this.user.id);
-      } else if (this.user.loggedIn && action == "dislike") {
-        dislike(lolId, this.user.id);
-      }
+    likeLol(lol) {
+      const alreadyLiked = lol.likes.indexOf(this.user.id) > -1;
+      const alreadyDisliked = lol.dislikes.indexOf(this.user.id) > -1;
 
+      if (this.user.loggedIn) {
+        if(alreadyDisliked) {
+          removeDislike(lol.id, lol.dislikes, this.user.id);
+        }
+        
+        if(alreadyLiked) {
+          removeLike(lol.id, lol.likes, this.user.id);
+        } else {
+          addLike(lol.id, lol.likes, this.user.id);
+        }
+      }
+      //TODO : if not logged in - notify user to log in
+    },
+    dislikeLol(lol){
+      const alreadyDisliked = lol.dislikes.indexOf(this.user.id) > -1;
+      const alreadyLiked = lol.likes.indexOf(this.user.id) > -1;
+
+      if (this.user.loggedIn) {
+        if(alreadyLiked) {
+          removeLike(lol.id, lol.likes, this.user.id);
+        }
+
+        if(alreadyDisliked) {
+          removeDislike(lol.id, lol.dislikes, this.user.id);
+        } else {
+          addDislike(lol.id, lol.dislikes, this.user.id);
+        }
+      }
       //TODO : if not logged in - notify user to log in
     }
   },
