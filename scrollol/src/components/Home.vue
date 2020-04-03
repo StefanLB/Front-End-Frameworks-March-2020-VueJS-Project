@@ -21,16 +21,15 @@ export default {
   data: function() {
     return {
       lols: [],
-      filterCategory: null 
+      filterCategory: null
     };
   },
-  created: async function() {
-    this.$bind("lols", await getLols());
+  created: function() {
+    this.$bind("lols", getLols());
   },
   methods: {
     addFilter(category) {
       this.filterCategory = category;
-
     }
   }
 };
@@ -39,6 +38,5 @@ export default {
 <style lang="scss" scoped>
 .all-lols {
   justify-content: space-evenly;
-  margin-top: 48px;
 }
 </style>

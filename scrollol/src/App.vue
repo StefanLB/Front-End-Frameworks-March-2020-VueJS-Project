@@ -1,10 +1,10 @@
 <template>
   <v-app>
     <app-header></app-header>
-    <app-loading></app-loading>
-    <div>
-      <app-left-navigation></app-left-navigation>
-      <router-view class="app-body"></router-view>
+    <div class="app-body">
+        <app-loader :loading="loading" color="deep-purple accent-4" slot="extension"></app-loader>
+      
+      <router-view></router-view>
     </div>
     <app-footer></app-footer>
   </v-app>
@@ -14,15 +14,13 @@
 <script>
 import AppHeader from "./components/shared/Header.vue";
 import AppFooter from "./components/shared/Footer.vue";
-import AppLoading from "./components/shared/Loading.vue";
-import AppLeftNavigation from "./components/shared/LeftNavigation";
+import AppLoader from "./components/shared/Loader.vue";
 
 export default {
   components: {
     AppHeader,
     AppFooter,
-    AppLoading,
-    AppLeftNavigation
+    AppLoader
   }
 };
 </script>
@@ -30,5 +28,10 @@ export default {
 <style lang="scss" scoped>
 .app-body {
   margin-bottom: 120px;
+  margin-top: 51px;
+}
+
+.v-toolbar__extension {
+  padding: 0px !important;
 }
 </style>
