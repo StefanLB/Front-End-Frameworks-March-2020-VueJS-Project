@@ -17,7 +17,7 @@ export async function signIn(email, password) {
 
 export async function signUp(userdata) {
   changeLoaderState();
-  return await auth
+  await auth
     .createUserWithEmailAndPassword(userdata.email, userdata.password)
     .then(async d => {
       const data = {
@@ -25,9 +25,10 @@ export async function signUp(userdata) {
         firstName: userdata.firstName,
         lastName: userdata.lastName,
       };
-      return await setUserData(data).then(() => {
-        router.push("/");
-      });
+
+      setUserData(data);
+      auth.currentUser.displayName = userdata.firstName;
+      auth.currentUser.updateProfile({displayName: userdata.firstName}).then(router.push('/'));
     })
     .finally(() => {
       changeLoaderState();
@@ -45,3 +46,5 @@ export async function logOut() {
       changeLoaderState();
     });
 }
+
+    //firebase.auth().currentUser.updateProfile({displayName: 'TESTDISPLAYNAME'});

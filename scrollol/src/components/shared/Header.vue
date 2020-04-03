@@ -1,25 +1,26 @@
 <template>
-    <v-toolbar class="toolbar" extension-height="0" dense>
-      <v-btn to="/home">
-        <v-icon>mdi-script-text-outline</v-icon>
-        <v-toolbar-title>
-          <span>ScrolLol</span>
-        </v-toolbar-title>
+  <v-toolbar class="toolbar" extension-height="0" dense>
+    <v-btn to="/home">
+      <v-icon>mdi-script-text-outline</v-icon>
+      <v-toolbar-title>
+        <span>ScrolLol</span>
+      </v-toolbar-title>
+    </v-btn>
+    <v-spacer></v-spacer>
+    <v-toolbar-items class="hidden-xs-only" v-if="!userLoggedIn">
+      <v-btn v-for="item in items" :key="item.title" :to="item.link">
+        <v-icon>{{item.icon}}</v-icon>
+        {{item.title}}
       </v-btn>
       <v-spacer></v-spacer>
-      <v-toolbar-items class="hidden-xs-only" v-if="!userLoggedIn">
-        <v-btn v-for="item in items" :key="item.title" :to="item.link">
-          <v-icon>{{item.icon}}</v-icon>
-          {{item.title}}
-        </v-btn>
-        <v-spacer></v-spacer>
-      </v-toolbar-items>
-      <v-toolbar-items class="hidden-xs-only" v-else>
-        <v-btn @click="logoutFromFirebase">
-          <v-icon>delete_sweep</v-icon>Logout
-        </v-btn>
-      </v-toolbar-items>
-    </v-toolbar>
+    </v-toolbar-items>
+    <v-toolbar-items class="hidden-xs-only" v-else>
+      <v-btn to="/user/profile">Hello, {{getDisplayName}}</v-btn>
+      <v-btn @click="logoutFromFirebase">
+        <v-icon>delete_sweep</v-icon>Logout
+      </v-btn>
+    </v-toolbar-items>
+  </v-toolbar>
 </template>
 
 
@@ -55,6 +56,9 @@ export default {
     },
     userLoggedIn() {
       return this.user.loggedIn;
+    },
+    getDisplayName: function() {
+      return this.user.data.displayName;
     }
     // firstName() {
     //   if (this.user.data.displayName) {

@@ -7,6 +7,8 @@ import Contact from "./components/Contact.vue";
 import Login from "./components/authentication/Login.vue";
 import Register from "./components/authentication/Register.vue";
 import AddLol from "./components/lols/AddLol.vue";
+import UserProfile from "./components/user/Profile.vue";
+
 
 import { auth } from "./firebase";
 
@@ -48,6 +50,14 @@ const routes = [
     path: "/lols/add",
     name: "AddLol",
     component: AddLol,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/user/profile",
+    name: "UserProfile",
+    component: UserProfile,
     meta: {
       requiresAuth: true
     }
