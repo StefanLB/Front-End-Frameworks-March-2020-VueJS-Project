@@ -43,6 +43,7 @@ export function removeDislike(lolId, dislikes, userId) {
 }
 
 export function getLols() {
+  
   return firestore.collection("lols");
 }
 

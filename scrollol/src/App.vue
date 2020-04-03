@@ -2,8 +2,7 @@
   <v-app>
     <app-header></app-header>
     <div class="app-body">
-        <app-loader :loading="loading" color="deep-purple accent-4" slot="extension"></app-loader>
-      
+      <app-loader></app-loader>
       <router-view></router-view>
     </div>
     <app-footer></app-footer>

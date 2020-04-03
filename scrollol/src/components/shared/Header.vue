@@ -1,5 +1,5 @@
 <template>
-    <v-toolbar class="toolbar" app extension-height="0" dense>
+    <v-toolbar class="toolbar" extension-height="0" dense>
       <v-btn to="/home">
         <v-icon>mdi-script-text-outline</v-icon>
         <v-toolbar-title>

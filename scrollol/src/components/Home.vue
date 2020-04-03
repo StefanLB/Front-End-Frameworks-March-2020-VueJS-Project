@@ -11,6 +11,7 @@
 import { getLols } from "../services/firestore.service";
 import AppAllLols from "./lols/AllLols";
 import AppLeftNavigation from "../components/shared/LeftNavigation";
+import { changeLoaderState } from "../services/loader.service"
 
 export default {
   name: "Home",
@@ -24,8 +25,10 @@ export default {
       filterCategory: null
     };
   },
-  created: function() {
-    this.$bind("lols", getLols());
+  created: async function() {
+    changeLoaderState()
+    this.$bind("lols", await getLols())
+    .then(() => changeLoaderState());
   },
   methods: {
     addFilter(category) {
