@@ -35,7 +35,7 @@ export async function signUp(userdata) {
       auth.currentUser
         .updateProfile({
           displayName: userdata.firstName,
-          photoURL: userdata.photoUrl,
+          photoURL: userdata.photoUrl
         })
         .then(router.push("/"));
     })
@@ -60,7 +60,7 @@ export async function logOut() {
 
 export async function signInGoogle() {
   const provider = new authGoogle.GoogleAuthProvider();
-  
+
   auth
     .signInWithPopup(provider)
     .then(function(result) {
@@ -72,6 +72,28 @@ export async function signInGoogle() {
     });
 }
 
-export async function updateUser(user) {
-  console.log(user);
+export async function updateUser(userdata) {
+  changeLoaderState();
+
+  const updatedData = {
+    firstName: userdata.firstName,
+    lastName: userdata.lastName,
+    phoneNumber: userdata.phoneNumber,
+    uid: auth.currentUser.uid
+  }
+
+  auth.currentUser.displayName = userdata.firstName;
+  setUserData(updatedData);
+
+  await auth.currentUser
+    .updateProfile({
+      displayName: userdata.firstName,
+      photoURL: userdata.photoURL
+    })
+    .then(() => {
+      router.push("/");
+    })
+    .finally(() => {
+      changeLoaderState();
+    });
 }

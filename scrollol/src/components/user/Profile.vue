@@ -1,7 +1,7 @@
 <template>
   <v-container>
-    <v-layout row wrap>
-      <v-flex>
+    <v-layout row wrap justify-center>
+      <v-flex xs12 md10>
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-card class="profile-card">
             <v-card-title>User Profile</v-card-title>
@@ -28,38 +28,18 @@
                     required
                   ></v-text-field>
                 </v-flex>
-                <v-flex xs12 md4>
-                  <v-text-field v-model="email" label="E-mail" required></v-text-field>
+                <v-flex xs12 md6>
+                  <v-text-field v-model="email" label="E-mail" disabled></v-text-field>
                 </v-flex>
-                <v-flex xs12 md4>
+                <v-flex xs12 md6>
                   <v-text-field v-model="user.phoneNumber" :rules="phoneRules" label="Phone Number" required></v-text-field>
                 </v-flex>
-                <v-flex xs12 md4>
+                <v-flex xs12 md12>
                   <v-text-field
                     v-model="photoUrl"
                     :rules="photoUrlRules"
                     label="Photo URL"
                     required
-                  ></v-text-field>
-                </v-flex>
-                <v-flex xs12 md6>
-                  <v-text-field
-                    v-model="password"
-                    :rules="passwordRules"
-                    label="New Password"
-                    :append-icon="passwordShow ? 'visibility' : 'visibility_off'"
-                    :type="passwordShow ? 'text' : 'password'"
-                    @click:append="passwordShow = !passwordShow"
-                  ></v-text-field>
-                </v-flex>
-                <v-flex xs12 md6>
-                  <v-text-field
-                    v-model="confirmPassword"
-                    label="Confirm New Password"
-                    :rules="passwordRules"
-                    :append-icon="confirmPasswordShow ? 'visibility' : 'visibility_off'"
-                    :type="confirmPasswordShow ? 'text' : 'password'"
-                    @click:append="confirmPasswordShow = !confirmPasswordShow"
                   ></v-text-field>
                 </v-flex>
               </v-layout>
@@ -107,10 +87,7 @@ export default {
     photoUrlRules: [
       v => !!v || "Photo URL is required",
       v => /^http[s]{0,1}:\/\/.*$/.test(v) || "Photo URL must start with 'http://' or 'https://'"
-    ],
-    password: "",
-    confirmPassword: "",
-    passwordRules: [v => !!v || "Password and Confirm password Required"]
+    ]
   }),
   methods: {
     validateAndUpdate() {
@@ -121,10 +98,10 @@ export default {
     },
     async updateProfile() {
       const user = {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        email: this.email,
-        password: this.password
+        firstName: this.user.firstName,
+        lastName: this.user.lastName,
+        phoneNumber: this.user.phoneNumber,
+        photoURL: this.photoUrl
       };
       await updateUser(user);
     }
