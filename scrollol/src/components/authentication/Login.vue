@@ -1,25 +1,34 @@
 <template>
   <v-container>
-    <v-layout row wrap>
-      <v-flex>
+    <v-layout row wrap justify-center>
+      <v-flex xs12 md8>
         <v-form ref="form" v-model="valid" lazy-validation>
-          <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
-
-          <v-text-field
-            v-model="password"
-            :rules="passwordRules"
-            label="Password"
-            required
-            :append-icon="passwordShow ? 'visibility' : 'visibility_off'"
-            :type="passwordShow ? 'text' : 'password'"
-            @click:append="passwordShow = !passwordShow"
-          ></v-text-field>
-
-              <v-btn :disabled="!valid" color="success" @click="validateAndLogin">Login</v-btn>
-              <v-btn color="error" @click="reset">Reset Form</v-btn>
-              <v-btn style="float: right;" color="primary" @click="loginGoogle">
-                <v-icon>mdi-google</v-icon>Login with Google
-              </v-btn>
+          <v-card class="login-card">
+            <v-card-title justify-center>Login Form</v-card-title>
+            <v-container grid-list-md>
+              <v-layout wrap>
+                <v-flex xs12 md6>
+                  <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
+                </v-flex>
+                <v-flex xs12 md6>
+                  <v-text-field
+                    v-model="password"
+                    :rules="passwordRules"
+                    label="Password"
+                    required
+                    :append-icon="passwordShow ? 'visibility' : 'visibility_off'"
+                    :type="passwordShow ? 'text' : 'password'"
+                    @click:append="passwordShow = !passwordShow"
+                  ></v-text-field>
+                </v-flex>
+              </v-layout>
+            </v-container>
+            <v-btn :disabled="!valid" color="success" @click="validateAndLogin">Login</v-btn>
+            <v-btn color="error" @click="reset">Reset Form</v-btn>
+            <v-btn style="float: right;" color="primary" @click="loginGoogle">
+              <v-icon>mdi-google</v-icon>Login with Google
+            </v-btn>
+          </v-card>
         </v-form>
       </v-flex>
     </v-layout>
@@ -62,6 +71,11 @@ export default {
 </script>
 
 <style scoped>
+.login-card {
+  padding: 12px;
+  margin-top: 120px;
+}
+
 .error {
   margin-left: 8px;
 }

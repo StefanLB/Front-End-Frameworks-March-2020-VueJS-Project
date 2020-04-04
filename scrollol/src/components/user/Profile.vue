@@ -4,6 +4,7 @@
       <v-flex>
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-card class="profile-card">
+            <v-card-title >User Profile</v-card-title>
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12 md1>
@@ -31,7 +32,7 @@
                   <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
                 </v-flex>
                 <v-flex xs12 md4>
-                  <v-text-field v-model="phone" :rules="phoneRules" label="Phone" required></v-text-field>
+                  <v-text-field v-model="phone" :rules="phoneRules" label="Phone Number" required></v-text-field>
                 </v-flex>
                 <v-flex xs12 md4>
                   <v-text-field
@@ -45,7 +46,7 @@
                   <v-text-field
                     v-model="password"
                     :rules="passwordRules"
-                    label="Password"
+                    label="New Password"
                     required
                     :append-icon="passwordShow ? 'visibility' : 'visibility_off'"
                     :type="passwordShow ? 'text' : 'password'"
@@ -55,7 +56,7 @@
                 <v-flex xs12 md6>
                   <v-text-field
                     v-model="confirmPassword"
-                    label="Confirm Password"
+                    label="Confirm New Password"
                     :rules="passwordRules"
                     required
                     :append-icon="confirmPasswordShow ? 'visibility' : 'visibility_off'"

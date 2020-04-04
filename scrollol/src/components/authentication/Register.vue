@@ -3,35 +3,67 @@
     <v-layout row wrap>
       <v-flex>
         <v-form ref="form" v-model="valid" lazy-validation>
-          <v-text-field v-model="firstName" :rules="firstNameRules" label="First Name" required></v-text-field>
-
-          <v-text-field v-model="lastName" :rules="lastNameRules" label="Last Name" required></v-text-field>
-
-          <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
-
-          <v-text-field
-            v-model="password"
-            :rules="passwordRules"
-            label="Password"
-            required
-            :append-icon="passwordShow ? 'visibility' : 'visibility_off'"
-            :type="passwordShow ? 'text' : 'password'"
-            @click:append="passwordShow = !passwordShow"
-          ></v-text-field>
-
-          <v-text-field
-            v-model="confirmPassword"
-            label="Confirm Password"
-            :rules="passwordRules"
-            required
-            :append-icon="confirmPasswordShow ? 'visibility' : 'visibility_off'"
-            :type="confirmPasswordShow ? 'text' : 'password'"
-            @click:append="confirmPasswordShow = !confirmPasswordShow"
-          ></v-text-field>
-
-          <v-btn :disabled="!valid" color="success" @click="validateAndRegister">Register</v-btn>
-
-          <v-btn class="error" color="error" @click="reset">Reset Form</v-btn>
+          <v-card class="register-card">
+            <v-card-title >Register Form</v-card-title>
+            <v-container grid-list-md>
+              <v-layout wrap>
+                <v-flex xs12 md6>
+                  <v-text-field
+                    v-model="firstName"
+                    :rules="firstNameRules"
+                    label="First Name"
+                    required
+                  ></v-text-field>
+                </v-flex>
+                <v-flex xs12 md6>
+                  <v-text-field
+                    v-model="lastName"
+                    :rules="lastNameRules"
+                    label="Last Name"
+                    required
+                  ></v-text-field>
+                </v-flex>
+                <v-flex xs12 md4>
+                  <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
+                </v-flex>
+                <v-flex xs12 md4>
+                  <v-text-field v-model="phone" :rules="phoneRules" label="Phone Number" required></v-text-field>
+                </v-flex>
+                <v-flex xs12 md4>
+                  <v-text-field
+                    v-model="photoUrl"
+                    :rules="photoUrlRules"
+                    label="Photo URL"
+                    required
+                  ></v-text-field>
+                </v-flex>
+                <v-flex xs12 md6>
+                  <v-text-field
+                    v-model="password"
+                    :rules="passwordRules"
+                    label="Password"
+                    required
+                    :append-icon="passwordShow ? 'visibility' : 'visibility_off'"
+                    :type="passwordShow ? 'text' : 'password'"
+                    @click:append="passwordShow = !passwordShow"
+                  ></v-text-field>
+                </v-flex>
+                <v-flex xs12 md6>
+                  <v-text-field
+                    v-model="confirmPassword"
+                    label="Confirm Password"
+                    :rules="passwordRules"
+                    required
+                    :append-icon="confirmPasswordShow ? 'visibility' : 'visibility_off'"
+                    :type="confirmPasswordShow ? 'text' : 'password'"
+                    @click:append="confirmPasswordShow = !confirmPasswordShow"
+                  ></v-text-field>
+                </v-flex>
+              </v-layout>
+            </v-container>
+              <v-btn class="reg-button" :disabled="!valid" color="success" @click="validateAndRegister">Register</v-btn>
+              <v-btn class="reg-button" color="error" @click="reset">Reset Form</v-btn>
+          </v-card>
         </v-form>
       </v-flex>
     </v-layout>
@@ -76,20 +108,25 @@ export default {
       this.$refs.form.reset();
     },
     async registerWithFirebase() {
-        const user = {
-          firstName: this.firstName,
-          lastName: this.lastName,
-          email: this.email,
-          password: this.password
-        };
-        await signUp(user);
-      }
+      const user = {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        email: this.email,
+        password: this.password
+      };
+      await signUp(user);
     }
-  };
+  }
+};
 </script>
 
 <style scoped>
-.error {
+.register-card {
+  padding: 12px;
+  margin-top: 12px;
+}
+
+.reg-button {
   margin-left: 8px;
 }
 </style>
