@@ -60,6 +60,11 @@
                   ></v-text-field>
                 </v-flex>
               </v-layout>
+              <v-card-subtitle
+                v-if="showConfirmPasswordError"
+                class="errorMessage"
+                style="color: darkred;"
+              >Password and confirm password must match</v-card-subtitle>
             </v-container>
             <v-btn
               class="reg-button"
@@ -82,6 +87,7 @@ export default {
   data: () => ({
     passwordShow: false,
     confirmPasswordShow: false,
+    showConfirmPasswordError: false,
     valid: true,
     firstName: "",
     firstNameRules: [
@@ -101,12 +107,16 @@ export default {
     phone: "",
     phoneRules: [
       v => !!v || "Phone number is required",
-      v => /^\+[0-9]+$/.test(v) || "Phone number must start with '+' and contain only digits after."
+      v =>
+        /^\+[0-9]+$/.test(v) ||
+        "Phone number must start with '+' and contain only digits after."
     ],
     photoUrl: "",
     photoUrlRules: [
       v => !!v || "Photo URL is required",
-      v => /^http[s]{0,1}:\/\/.*$/.test(v) || "Photo URL must start with 'http://' or 'https://'"
+      v =>
+        /^http[s]{0,1}:\/\/.*$/.test(v) ||
+        "Photo URL must start with 'http://' or 'https://'"
     ],
     password: "",
     confirmPassword: "",
@@ -115,12 +125,18 @@ export default {
   methods: {
     validateAndRegister() {
       if (this.$refs.form.validate()) {
-        this.registerWithFirebase();
-        this.reset();
+        if (this.password === this.confirmPassword) {
+          this.showConfirmPasswordError = false;
+          this.registerWithFirebase();
+          this.reset();
+        } else {
+          this.showConfirmPasswordError = true;
+        }
       }
     },
     reset() {
       this.$refs.form.reset();
+      this.showConfirmPasswordError = false;
     },
     async registerWithFirebase() {
       const user = {
@@ -145,5 +161,9 @@ export default {
 
 .reg-button {
   margin-left: 8px;
+}
+
+.errorMessage {
+  padding: 0px;
 }
 </style>

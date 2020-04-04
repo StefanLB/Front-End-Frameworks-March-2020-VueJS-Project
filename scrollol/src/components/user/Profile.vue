@@ -29,7 +29,7 @@
                   ></v-text-field>
                 </v-flex>
                 <v-flex xs12 md4>
-                  <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
+                  <v-text-field v-model="email" label="E-mail" required></v-text-field>
                 </v-flex>
                 <v-flex xs12 md4>
                   <v-text-field v-model="user.phoneNumber" :rules="phoneRules" label="Phone Number" required></v-text-field>
@@ -47,7 +47,6 @@
                     v-model="password"
                     :rules="passwordRules"
                     label="New Password"
-                    required
                     :append-icon="passwordShow ? 'visibility' : 'visibility_off'"
                     :type="passwordShow ? 'text' : 'password'"
                     @click:append="passwordShow = !passwordShow"
@@ -58,7 +57,6 @@
                     v-model="confirmPassword"
                     label="Confirm New Password"
                     :rules="passwordRules"
-                    required
                     :append-icon="confirmPasswordShow ? 'visibility' : 'visibility_off'"
                     :type="confirmPasswordShow ? 'text' : 'password'"
                     @click:append="confirmPasswordShow = !confirmPasswordShow"
@@ -101,10 +99,6 @@ export default {
       v => /.{3,}/.test(v) || "Last Name must be at least 3 symbols long"
     ],
     email: null,
-    emailRules: [
-      v => !!v || "E-mail is required",
-      v => /.+@.+/.test(v) || "E-mail must be valid"
-    ],
     phoneRules: [
       v => !!v || "Phone number is required",
       v => /^\+[0-9]+$/.test(v) || "Phone number must start with '+' and contain only digits after."
