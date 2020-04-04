@@ -24,13 +24,19 @@ export async function signUp(userdata) {
       const data = {
         uid: d.user.uid,
         firstName: userdata.firstName,
-        lastName: userdata.lastName
+        lastName: userdata.lastName,
+        phoneNumber: userdata.phone
       };
 
-      setUserData(data);
       auth.currentUser.displayName = userdata.firstName;
+      await setUserData(data);
+    })
+    .then(async () => {
       auth.currentUser
-        .updateProfile({ displayName: userdata.firstName })
+        .updateProfile({
+          displayName: userdata.firstName,
+          photoURL: userdata.photoUrl,
+        })
         .then(router.push("/"));
     })
     .finally(() => {
@@ -39,6 +45,8 @@ export async function signUp(userdata) {
 }
 
 export async function logOut() {
+  console.log(auth.currentUser);
+
   changeLoaderState();
   return await auth
     .signOut()

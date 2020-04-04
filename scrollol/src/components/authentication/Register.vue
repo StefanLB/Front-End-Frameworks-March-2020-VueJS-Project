@@ -4,7 +4,7 @@
       <v-flex>
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-card class="register-card">
-            <v-card-title >Register Form</v-card-title>
+            <v-card-title>Register Form</v-card-title>
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12 md6>
@@ -61,8 +61,13 @@
                 </v-flex>
               </v-layout>
             </v-container>
-              <v-btn class="reg-button" :disabled="!valid" color="success" @click="validateAndRegister">Register</v-btn>
-              <v-btn class="reg-button" color="error" @click="reset">Reset Form</v-btn>
+            <v-btn
+              class="reg-button"
+              :disabled="!valid"
+              color="success"
+              @click="validateAndRegister"
+            >Register</v-btn>
+            <v-btn class="reg-button" color="error" @click="reset">Reset Form</v-btn>
           </v-card>
         </v-form>
       </v-flex>
@@ -93,6 +98,16 @@ export default {
       v => !!v || "E-mail is required",
       v => /.+@.+/.test(v) || "E-mail must be valid"
     ],
+    phone: "",
+    phoneRules: [
+      v => !!v || "Phone number is required",
+      v => /^\+[0-9]+$/.test(v) || "Phone number must start with '+' and contain only digits after."
+    ],
+    photoUrl: "",
+    photoUrlRules: [
+      v => !!v || "Photo URL is required",
+      v => /^http[s]{0,1}:\/\/.*$/.test(v) || "Photo URL must start with 'http://' or 'https://'"
+    ],
     password: "",
     confirmPassword: "",
     passwordRules: [v => !!v || "Password and Confirm password Required"]
@@ -112,6 +127,8 @@ export default {
         firstName: this.firstName,
         lastName: this.lastName,
         email: this.email,
+        phone: this.phone,
+        photoUrl: this.photoUrl,
         password: this.password
       };
       await signUp(user);

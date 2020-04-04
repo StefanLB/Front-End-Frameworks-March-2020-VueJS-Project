@@ -4,7 +4,7 @@
       <v-flex>
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-card class="profile-card">
-            <v-card-title >User Profile</v-card-title>
+            <v-card-title>User Profile</v-card-title>
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12 md1>
@@ -14,7 +14,7 @@
                 </v-flex>
                 <v-flex xs12 md5>
                   <v-text-field
-                    v-model="firstName"
+                    v-model="user.firstName"
                     :rules="firstNameRules"
                     label="First Name"
                     required
@@ -22,7 +22,7 @@
                 </v-flex>
                 <v-flex xs12 md5>
                   <v-text-field
-                    v-model="lastName"
+                    v-model="user.lastName"
                     :rules="lastNameRules"
                     label="Last Name"
                     required
@@ -32,7 +32,7 @@
                   <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
                 </v-flex>
                 <v-flex xs12 md4>
-                  <v-text-field v-model="phone" :rules="phoneRules" label="Phone Number" required></v-text-field>
+                  <v-text-field v-model="user.phoneNumber" :rules="phoneRules" label="Phone Number" required></v-text-field>
                 </v-flex>
                 <v-flex xs12 md4>
                   <v-text-field
@@ -78,27 +78,41 @@
 </template>
 
 <script>
+import firebase from "firebase/app";
 import { updateUser } from "../../services/auth.service";
+import { getMyProfile } from "../../services/firestore.service";
 
 export default {
   data: () => ({
     passwordShow: false,
     confirmPasswordShow: false,
     valid: true,
-    firstName: "",
+    user: {
+      firstName: null,
+      lastName: null,
+      phoneNumber: null
+    },
     firstNameRules: [
       v => !!v || "First Name is required",
       v => /.{3,}/.test(v) || "First Name must be at least 3 symbols long"
     ],
-    lastName: "",
     lastNameRules: [
       v => !!v || "Last Name is required",
       v => /.{3,}/.test(v) || "Last Name must be at least 3 symbols long"
     ],
-    email: "",
+    email: null,
     emailRules: [
       v => !!v || "E-mail is required",
       v => /.+@.+/.test(v) || "E-mail must be valid"
+    ],
+    phoneRules: [
+      v => !!v || "Phone number is required",
+      v => /^\+[0-9]+$/.test(v) || "Phone number must start with '+' and contain only digits after."
+    ],
+    photoUrl: null,
+    photoUrlRules: [
+      v => !!v || "Photo URL is required",
+      v => /^http[s]{0,1}:\/\/.*$/.test(v) || "Photo URL must start with 'http://' or 'https://'"
     ],
     password: "",
     confirmPassword: "",
@@ -120,6 +134,22 @@ export default {
       };
       await updateUser(user);
     }
+  },
+  created: function() {
+    this.$bind("user", getMyProfile());
+    this.$bind("email", firebase.auth().currentUser.email); 
+    this.$bind("photoUrl", firebase.auth().currentUser.photoURL);
+    console.log('LOGGING AUTH USER');
+    console.log(firebase.auth().currentUser.email);
+    console.log(firebase.auth().currentUser.photoURL);
+  },
+  mounted: function() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.email = user.email;
+        this.photoUrl = user.photoURL;
+      }
+    });
   }
 };
 </script>
@@ -131,10 +161,10 @@ export default {
 }
 
 .buttons {
-    text-align: center
+  text-align: center;
 }
 
 .error {
-    margin-left: 8px;
+  margin-left: 8px;
 }
 </style>

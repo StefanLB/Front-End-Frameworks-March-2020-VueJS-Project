@@ -43,7 +43,6 @@ export function removeDislike(lolId, dislikes, userId) {
 }
 
 export function getLols() {
-  
   return firestore.collection("lols");
 }
 
@@ -63,10 +62,6 @@ export async function setUserData(data) {
   return await setData(data, `users/${data.uid}`);
 }
 
-export async function setProject(data) {
-  return await setData(data, `projects/${data.id}`);
-}
-
 export function getUsersCollection() {
   return firestore.collection("users");
 }
@@ -82,7 +77,9 @@ export function getUser(id) {
 export function getMyProfile() {
   if (auth.currentUser) {
     const uid = auth.currentUser.uid;
-    return getUsersCollection().doc(uid);
+    let user = getUsersCollection().doc(uid);
+
+    return user;
   }
   return null;
 }

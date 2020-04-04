@@ -25,8 +25,6 @@
 
 
 <script>
-//TODO: USE v-app-bar elements
-
 import firebase from "firebase/app";
 import { logOut } from "../../services/auth.service"
 
@@ -59,7 +57,7 @@ export default {
       return this.user.loggedIn;
     },
     getDisplayName: function() {
-      return this.user.data.displayName;
+      return this.user.data.displayName ? this.user.data.displayName : this.user.data.email;
     }
   },
   methods: {
