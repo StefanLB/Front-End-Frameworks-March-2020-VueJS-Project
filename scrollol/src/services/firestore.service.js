@@ -78,7 +78,6 @@ export function getMyProfile() {
   if (auth.currentUser) {
     const uid = auth.currentUser.uid;
     let user = getUsersCollection().doc(uid);
-
     return user;
   }
   return null;

@@ -9,7 +9,7 @@
               <v-layout wrap>
                 <v-flex xs12 md1>
                   <v-avatar class="profile" color="grey" size="64">
-                    <v-img src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"></v-img>
+                    <v-img :lazy-src="photoUrl"></v-img>
                   </v-avatar>
                 </v-flex>
                 <v-flex xs12 md5>
@@ -137,11 +137,6 @@ export default {
   },
   created: function() {
     this.$bind("user", getMyProfile());
-    this.$bind("email", firebase.auth().currentUser.email); 
-    this.$bind("photoUrl", firebase.auth().currentUser.photoURL);
-    console.log('LOGGING AUTH USER');
-    console.log(firebase.auth().currentUser.email);
-    console.log(firebase.auth().currentUser.photoURL);
   },
   mounted: function() {
     firebase.auth().onAuthStateChanged(user => {
