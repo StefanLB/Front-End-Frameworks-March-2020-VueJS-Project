@@ -28,6 +28,7 @@
 //TODO: USE v-app-bar elements
 
 import firebase from "firebase/app";
+import { logOut } from "../../services/auth.service"
 
 export default {
   data() {
@@ -60,22 +61,10 @@ export default {
     getDisplayName: function() {
       return this.user.data.displayName;
     }
-    // firstName() {
-    //   if (this.user.data.displayName) {
-    //     return this.user.data.displayName.split(' ')[0]
-    //   }
-    //   return null
-    // }
   },
   methods: {
-    logoutFromFirebase() {
-      firebase
-        .auth()
-        .signOut()
-        .then(function() {})
-        .catch(function(error) {
-          console.log(error);
-        });
+    async logoutFromFirebase() {
+      await logOut();
     }
   },
   mounted: function() {

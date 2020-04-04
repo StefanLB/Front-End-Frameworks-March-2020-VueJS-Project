@@ -66,8 +66,8 @@
               </v-layout>
             </v-container>
             <div class="buttons">
-              <v-btn :disabled="!valid" color="success" @click="validateAndRegister">Update Profile</v-btn>
-              <v-btn class="error" color="error" @click="reset">Cancel</v-btn>
+              <v-btn :disabled="!valid" color="success" @click="validateAndUpdate">Update Profile</v-btn>
+              <v-btn class="error" color="error" to="/">Cancel</v-btn>
             </div>
           </v-card>
         </v-form>
@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import { signUp } from "../../services/auth.service";
+import { updateUser } from "../../services/auth.service";
 
 export default {
   data: () => ({
@@ -104,23 +104,20 @@ export default {
     passwordRules: [v => !!v || "Password and Confirm password Required"]
   }),
   methods: {
-    validateAndRegister() {
+    validateAndUpdate() {
       if (this.$refs.form.validate()) {
-        this.registerWithFirebase();
+        this.updateProfile();
         this.reset();
       }
     },
-    reset() {
-      this.$refs.form.reset();
-    },
-    async registerWithFirebase() {
+    async updateProfile() {
       const user = {
         firstName: this.firstName,
         lastName: this.lastName,
         email: this.email,
         password: this.password
       };
-      await signUp(user);
+      await updateUser(user);
     }
   }
 };

@@ -63,3 +63,7 @@ export async function signInGoogle() {
       console.log("Error Logging in!");
     });
 }
+
+export async function updateUser(user) {
+  console.log(user);
+}
