@@ -1,7 +1,16 @@
 import { auth, firestore } from "../firebase";
-//import firebase from 'firebase/app';
 
-addLike, removeLike, addDislike, removeDislike;
+export async function getComments(lolId) {
+  console.log("getcomments");
+  console.log(lolId);
+  return await firestore.collection("comments").orderBy("addedOn", "desc");
+  // return await firestore.collection("comments").where("lolId", "==", lolId);
+}
+
+export async function getLol(lolId) {
+  console.log(lolId);
+  return await firestore.collection("lols").doc(lolId);
+}
 
 export function addLike(lolId, likes, userId) {
   likes.push(userId);
@@ -13,10 +22,7 @@ export function addLike(lolId, likes, userId) {
 }
 
 export function removeLike(lolId, likes, userId) {
-  console.log(likes);
-
   const updatedLikes = likes.filter(l => l != userId);
-  console.log(updatedLikes);
 
   firestore
     .collection("lols")
@@ -43,11 +49,11 @@ export function removeDislike(lolId, dislikes, userId) {
 }
 
 export function getLols() {
-  return firestore.collection("lols");
+  return firestore.collection("lols").orderBy("createdOn", "desc");
 }
 
 export function getCategories() {
-  return firestore.collection("categories").orderBy("category");
+  return firestore.collection("categories").orderBy("category", "asc");
 }
 
 export async function addLol(lol) {
@@ -87,10 +93,6 @@ export function searchUserByName(name) {
   return getUsersCollection()
     .where("firstName", ">=", name)
     .limit(5);
-}
-
-export function getLol(id) {
-  return getLols().doc(id);
 }
 
 export function getLolsByCreator(id) {

@@ -84,9 +84,6 @@ export default {
     matchesCategory(category) {
       return this.filterCategory ? category == this.filterCategory : true;
     },
-    userActivity() {
-      return true;
-    },
     userInvolved(collection) {
       if (this.user.loggedIn && collection) {
         return collection.indexOf(this.user.id) > -1;
