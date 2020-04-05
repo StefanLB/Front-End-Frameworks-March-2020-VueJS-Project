@@ -11,28 +11,21 @@
             <v-card-title>{{lol.title}}</v-card-title>
             <v-card-subtitle class="card-subtitle">{{lol.description}}</v-card-subtitle>
             <v-img width="500" :src="lol.imageUrl"></v-img>
-          </v-col>
-          <v-col cols="auto" class="text-center pl-0">
-            <v-row class="flex-column ma-0 fill-height" justify="center">
-              <v-col class="px-0"></v-col>
-              <v-col class="px-0">
-                <v-btn icon @click="likeLol(lol)">
-                  <v-icon
-                    v-bind:style="{ color: userInvolved(lol.likes) ? '#1B5E20' : '#81C784'}"
-                  >thumb_up</v-icon>
-                  <div class="counter">{{lol.likes.length}}</div>
-                </v-btn>
-              </v-col>
+            <div class="likeDislike">
+              <v-btn icon @click="likeLol(lol)" style="margin-right: 48px;">
+                <v-icon
+                  v-bind:style="{ color: userInvolved(lol.likes) ? '#1B5E20' : '#81C784'}"
+                >thumb_up</v-icon>
+                <div class="counter">{{lol.likes.length}}</div>
+              </v-btn>
 
-              <v-col class="px-0">
-                <v-btn icon @click="dislikeLol(lol)">
-                  <v-icon
-                    v-bind:style="{ color: userInvolved(lol.dislikes) ? '#B71C1C' : '#E57373'}"
-                  >thumb_down</v-icon>
-                  <div class="counter">{{lol.dislikes.length}}</div>
-                </v-btn>
-              </v-col>
-            </v-row>
+              <v-btn icon @click="dislikeLol(lol)">
+                <v-icon
+                  v-bind:style="{ color: userInvolved(lol.dislikes) ? '#B71C1C' : '#E57373'}"
+                >thumb_down</v-icon>
+                <div class="counter">{{lol.dislikes.length}}</div>
+              </v-btn>
+            </div>
           </v-col>
 
           <v-divider vertical class="vert-divider"></v-divider>
@@ -173,6 +166,7 @@ export default {
 }
 
 .comments {
+  min-width: 320px;
   max-width: 400px;
   text-align: justify;
 }
@@ -180,5 +174,9 @@ export default {
 .vert-divider {
   margin-left: 20px;
   margin-right: 20px;
+}
+
+.likeDislike {
+  margin-top: 12px;
 }
 </style>

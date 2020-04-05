@@ -29,6 +29,9 @@ export default {
   data: () => ({
     content: ""
   }),
+    props: {
+    totalComments: Number
+  },
   computed: {
     contentErrors() {
       const errors = [];
@@ -46,13 +49,15 @@ export default {
       const commentData = {
         content: this.content,
         addedOn: new Date(),
-        lolId: this.$route.params.id
+        lolId: this.$route.params.id,
+        totalComments: this.totalComments + 1
       };
 
       addComment(commentData)
         .then(() => {
           this.clear();
           console.log("Comment added successfully!");
+          this.updateComments();
         })
         .catch(function(error) {
           console.log("Error adding comment!" + error);
@@ -61,6 +66,9 @@ export default {
     clear() {
       this.$v.$reset();
       this.content = "";
+    },
+    updateComments() {
+      this.$emit("update-comments");
     }
   }
 };
@@ -68,8 +76,8 @@ export default {
 
 <style lang="scss" scoped>
 .buttons {
-    margin-top: 8px;
-    float: right;
+  margin-top: 8px;
+  float: right;
 }
 
 form {

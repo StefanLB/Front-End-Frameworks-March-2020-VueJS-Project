@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="comment of comments" :key="comment.id">
+    <div v-for="comment of orderedComments" :key="comment.id">
       <v-card class="d-inline-block mx-auto list-item comment">
         <v-container>
           <div class="overline">By: {{comment.addedByName}}</div>
@@ -15,7 +15,7 @@
       </v-card>
       <v-divider></v-divider>
     </div>
-    <app-add-comment></app-add-comment>
+    <app-add-comment @update-comments="updateComments" :totalComments="totalComments"></app-add-comment>
   </div>
 </template>
 
@@ -35,7 +35,11 @@ export default {
     return {
       user: {
         id: String
-      }
+      },
+      orderedComments: this.comments?.sort((a, b) =>
+        a.addedOn > b.addedOn ? 1 : b.addedOn > a.addedOn ? -1 : 0
+      ),
+      totalComments: this.comments?.length
     };
   },
   props: {
@@ -47,6 +51,13 @@ export default {
     },
     delComment(commentId) {
       deleteComment(commentId, this.user.id);
+    },
+    updateComments() {
+      this.orderedComments = this.comments?.sort((a, b) =>
+        a.addedOn > b.addedOn ? 1 : b.addedOn > a.addedOn ? -1 : 0
+      );
+
+      this.totalComments = this.comments?.length;
     }
   },
   mounted: function() {

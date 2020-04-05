@@ -1,7 +1,14 @@
 import { auth, firestore } from "../firebase";
 
-export async function addComment(comment) {
-  console.log(comment);
+export async function addComment(commentData) {
+  if (auth.currentUser) {
+    commentData.addedBy = auth.currentUser.uid;
+    commentData.addedByName = auth.currentUser.displayName;
+
+    firestore.collection("lols").doc(commentData.lolId).update({ ["comments"]: commentData.totalComments});
+    return await firestore.collection("comments").add(commentData);
+  }
+  return null;
 }
 
 export async function deleteComment(commentId) {
