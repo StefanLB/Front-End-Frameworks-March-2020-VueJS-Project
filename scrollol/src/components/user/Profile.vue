@@ -93,7 +93,6 @@ export default {
     validateAndUpdate() {
       if (this.$refs.form.validate()) {
         this.updateProfile();
-        this.reset();
       }
     },
     async updateProfile() {
@@ -103,6 +102,9 @@ export default {
         phoneNumber: this.user.phoneNumber,
         photoURL: this.photoUrl
       };
+
+      firebase.auth().currentUser.displayName = this.user.firstName;
+      
       await updateUser(user);
     }
   },

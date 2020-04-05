@@ -80,9 +80,8 @@ export async function updateUser(userdata) {
     lastName: userdata.lastName,
     phoneNumber: userdata.phoneNumber,
     uid: auth.currentUser.uid
-  }
+  };
 
-  auth.currentUser.displayName = userdata.firstName;
   setUserData(updatedData);
 
   await auth.currentUser
