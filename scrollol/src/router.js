@@ -7,6 +7,7 @@ import Contact from "./components/Contact.vue";
 import Login from "./components/authentication/Login.vue";
 import Register from "./components/authentication/Register.vue";
 import AddLol from "./components/lols/AddLol.vue";
+import LolDetails from "./components/lols/LolDetails.vue";
 import UserProfile from "./components/user/Profile.vue";
 
 
@@ -58,6 +59,13 @@ const routes = [
     path: "/user/profile",
     name: "UserProfile",
     component: UserProfile,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/lols/details/:id",
+    component: LolDetails,
     meta: {
       requiresAuth: true
     }

@@ -1,14 +1,15 @@
 <template>
   <div>
-    <v-subheader>All Lols Component</v-subheader>
-    <div class="color"></div>
-    <div class="list" v-for="lol of lols" :key="lol.id" :to="'/comments/' + lol.id">
+    <v-subheader>Browse LoLs Below</v-subheader>
+    <div v-for="lol of lols" :key="lol.id">
       <div v-if="matchesCategory(lol.category)">
         <v-card class="d-inline-block mx-auto list-item">
           <v-container>
             <v-row justify="space-between">
               <v-col cols="auto">
-                <v-card-title>{{lol.title}}</v-card-title>
+                <router-link :to="'/lols/details/' + lol.id" target="_blank">
+                  <v-card-title>{{lol.title}}</v-card-title>
+                </router-link>
                 <v-img width="500" :src="lol.imageUrl"></v-img>
               </v-col>
               <v-col cols="auto" class="text-center pl-0">
@@ -33,7 +34,7 @@
                   </v-col>
 
                   <v-col class="px-0">
-                    <v-btn icon>
+                    <v-btn icon :to="'/lols/details/' + lol.id" target="_blank">
                       <v-icon
                         v-bind:style="{ color: lol.comments > 0 ? '#0D47A1' : '#64B5F6'}"
                       >comment</v-icon>
@@ -53,7 +54,12 @@
 </template>
 
 <script>
-import { addLike, removeLike, addDislike, removeDislike } from "../../services/firestore.service";
+import {
+  addLike,
+  removeLike,
+  addDislike,
+  removeDislike
+} from "../../services/firestore.service";
 import moment from "moment";
 import firebase from "firebase/app";
 
@@ -92,11 +98,11 @@ export default {
       const alreadyDisliked = lol.dislikes.indexOf(this.user.id) > -1;
 
       if (this.user.loggedIn) {
-        if(alreadyDisliked) {
+        if (alreadyDisliked) {
           removeDislike(lol.id, lol.dislikes, this.user.id);
         }
-        
-        if(alreadyLiked) {
+
+        if (alreadyLiked) {
           removeLike(lol.id, lol.likes, this.user.id);
         } else {
           addLike(lol.id, lol.likes, this.user.id);
@@ -104,16 +110,16 @@ export default {
       }
       //TODO : if not logged in - notify user to log in
     },
-    dislikeLol(lol){
+    dislikeLol(lol) {
       const alreadyDisliked = lol.dislikes.indexOf(this.user.id) > -1;
       const alreadyLiked = lol.likes.indexOf(this.user.id) > -1;
 
       if (this.user.loggedIn) {
-        if(alreadyLiked) {
+        if (alreadyLiked) {
           removeLike(lol.id, lol.likes, this.user.id);
         }
 
-        if(alreadyDisliked) {
+        if (alreadyDisliked) {
           removeDislike(lol.id, lol.dislikes, this.user.id);
         } else {
           addDislike(lol.id, lol.dislikes, this.user.id);
@@ -164,5 +170,19 @@ export default {
 
 .divider {
   width: 650px;
+}
+
+.v-card__title {
+  padding-top:0px;
+  color: #007bff;
+}
+
+.v-card__title:hover {
+  padding-top:0px;
+  color: #3f51b5;
+}
+
+a {
+  text-decoration:none;
 }
 </style>
