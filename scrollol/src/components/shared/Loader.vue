@@ -1,8 +1,6 @@
 <template>
   <v-progress-linear 
     v-if="state"
-    :active="loading"
-    :color="color"
     :indeterminate="true"
     class="ma-0 loader-indeterminate"
     height="5"
