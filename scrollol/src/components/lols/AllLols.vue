@@ -35,9 +35,9 @@
                   <v-col class="px-0">
                     <v-btn icon>
                       <v-icon
-                        v-bind:style="{ color: userInvolved(lol.comments) ? '#0D47A1' : '#64B5F6'}"
+                        v-bind:style="{ color: lol.comments > 0 ? '#0D47A1' : '#64B5F6'}"
                       >comment</v-icon>
-                      <div class="counter">{{lol.comments.length}}</div>
+                      <div class="counter">{{lol.comments}}</div>
                     </v-btn>
                   </v-col>
                 </v-row>
