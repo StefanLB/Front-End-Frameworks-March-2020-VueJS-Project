@@ -15,20 +15,22 @@
       </v-card>
       <v-divider></v-divider>
     </div>
+    <app-add-comment></app-add-comment>
   </div>
 </template>
 
 
 <script>
-// import {
-//   addComment,
-//   deleteComment
-// } from "../../services/firestore.service";
+import AppAddComment from "./AddComment";
+import { deleteComment } from "../../services/firestore.service";
 import firebase from "firebase/app";
 import moment from "moment";
 
 export default {
   name: "AllComments",
+  components: {
+    AppAddComment
+  },
   data() {
     return {
       user: {
@@ -42,6 +44,9 @@ export default {
   methods: {
     formatDate(timestamp) {
       return moment(timestamp.seconds * 1000, "x").fromNow();
+    },
+    delComment(commentId) {
+      deleteComment(commentId, this.user.id);
     }
   },
   mounted: function() {
