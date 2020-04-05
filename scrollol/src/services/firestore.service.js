@@ -1,14 +1,18 @@
 import { auth, firestore } from "../firebase";
 
-export async function getComments(lolId) {
-  console.log("getcomments");
-  console.log(lolId);
-  return await firestore.collection("comments").orderBy("addedOn", "desc");
-  // return await firestore.collection("comments").where("lolId", "==", lolId);
+export async function addComment(comment) {
+  console.log(comment);
+}
+
+export async function deleteComment(commentId) {
+  console.log(commentId);
+}
+
+export function getComments(lolId) {
+  return firestore.collection("comments").where("lolId", "==", lolId);
 }
 
 export async function getLol(lolId) {
-  console.log(lolId);
   return await firestore.collection("lols").doc(lolId);
 }
 
@@ -89,12 +93,6 @@ export function getMyProfile() {
   return null;
 }
 
-export function searchUserByName(name) {
-  return getUsersCollection()
-    .where("firstName", ">=", name)
-    .limit(5);
-}
-
 export function getLolsByCreator(id) {
   return firestore.collection("lols").where("addedBy", "==", id);
 }
@@ -109,17 +107,4 @@ export function getMyLols() {
 
 async function setData(data, ref) {
   return await firestore.doc(ref).set(data);
-}
-
-function updateOneFieldFromProfile(field, data) {
-  return getMyProfile().update({ [field]: data });
-}
-
-export async function updateFieldFromLol(id, field, value) {
-  return getLol(id).update({ [field]: value });
-}
-
-export async function updateNames(first, last) {
-  updateOneFieldFromProfile("firstName", first);
-  updateOneFieldFromProfile("lastName", last);
 }

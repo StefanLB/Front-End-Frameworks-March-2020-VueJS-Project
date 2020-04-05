@@ -1,10 +1,15 @@
 <template>
-  <div class="lol-details">
+  <div v-if="lol" class="lol-details">
     <v-card class="d-inline-block mx-auto list-item">
+      <div class="overline">
+        Added: {{formatDate(lol.createdOn)}} ///
+        Category: {{lol.category}}
+      </div>
       <v-container>
         <v-row justify="space-between">
           <v-col cols="auto">
             <v-card-title>{{lol.title}}</v-card-title>
+            <v-card-subtitle class="card-subtitle">{{lol.description}}</v-card-subtitle>
             <v-img width="500" :src="lol.imageUrl"></v-img>
           </v-col>
           <v-col cols="auto" class="text-center pl-0">
@@ -32,12 +37,11 @@
 
           <v-divider vertical class="vert-divider"></v-divider>
 
-          <v-col cols="auto">
+          <v-col class="comments" cols="auto">
             <v-card-title class="comments">Comments</v-card-title>
-            <app-all-comments :comments="comments"></app-all-comments>
+            <app-all-comments v-if="comments" :comments="comments"></app-all-comments>
           </v-col>
         </v-row>
-        <div class="overline">Added: {{formatDate(lol.createdOn)}}</div>
       </v-container>
     </v-card>
   </div>
@@ -67,8 +71,8 @@ export default {
       user: {
         id: String
       },
-      lol: Object,
-      comments: Array
+      lol: null,
+      comments: []
     };
   },
   methods: {
@@ -85,50 +89,42 @@ export default {
       const alreadyLiked = lol.likes.indexOf(this.user.id) > -1;
       const alreadyDisliked = lol.dislikes.indexOf(this.user.id) > -1;
 
-      if (this.user.loggedIn) {
-        if (alreadyDisliked) {
-          removeDislike(lol.id, lol.dislikes, this.user.id);
-        }
+      if (alreadyDisliked) {
+        removeDislike(lol.id, lol.dislikes, this.user.id);
+      }
 
-        if (alreadyLiked) {
-          removeLike(lol.id, lol.likes, this.user.id);
-        } else {
-          addLike(lol.id, lol.likes, this.user.id);
-        }
+      if (alreadyLiked) {
+        removeLike(lol.id, lol.likes, this.user.id);
+      } else {
+        addLike(lol.id, lol.likes, this.user.id);
       }
     },
     dislikeLol(lol) {
       const alreadyDisliked = lol.dislikes.indexOf(this.user.id) > -1;
       const alreadyLiked = lol.likes.indexOf(this.user.id) > -1;
 
-      if (this.user.loggedIn) {
-        if (alreadyLiked) {
-          removeLike(lol.id, lol.likes, this.user.id);
-        }
+      if (alreadyLiked) {
+        removeLike(lol.id, lol.likes, this.user.id);
+      }
 
-        if (alreadyDisliked) {
-          removeDislike(lol.id, lol.dislikes, this.user.id);
-        } else {
-          addDislike(lol.id, lol.dislikes, this.user.id);
-        }
+      if (alreadyDisliked) {
+        removeDislike(lol.id, lol.dislikes, this.user.id);
+      } else {
+        addDislike(lol.id, lol.dislikes, this.user.id);
       }
     }
   },
-  mounted: function() {
+  mounted() {
     firebase.auth().onAuthStateChanged(user => {
       this.user.id = user.uid;
     });
   },
-  created: async function() {
+  async created() {
     changeLoaderState();
-    this.$bind("lol", await getLol(this.$route.params.id))
-      .then(() => {
-        this.$bind("comments", getComments(this.$route.params.id));
-      })
-      .finally(() => {
-        changeLoaderState();
-        console.log(this.comments);
-      });
+    this.$bind("comments", getComments(this.$route.params.id));
+    await this.$bind("lol", await getLol(this.$route.params.id)).finally(() => {
+      changeLoaderState();
+    });
   }
 };
 </script>
@@ -147,12 +143,9 @@ export default {
   margin-left: 4px;
 }
 
-.divider {
-  width: 650px;
-}
-
 .v-card__title {
   padding-top: 0px;
+  padding-left: 8px;
 }
 
 .lol-details {
@@ -171,6 +164,17 @@ export default {
 
 .comments {
   justify-content: center;
+}
+
+.card-subtitle {
+  max-width: 500px;
+  text-align: justify;
+  padding: 8px;
+}
+
+.comments {
+  max-width: 400px;
+  text-align: justify;
 }
 
 .vert-divider {
