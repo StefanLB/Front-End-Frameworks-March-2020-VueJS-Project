@@ -27,21 +27,19 @@
                   <div class="counter">{{lol.dislikes.length}}</div>
                 </v-btn>
               </v-col>
-
-              <v-col class="px-0">
-                <v-btn icon :to="'/lols/details/' + lol.id" target="_blank">
-                  <v-icon v-bind:style="{ color: lol.comments > 0 ? '#0D47A1' : '#64B5F6'}">comment</v-icon>
-                  <div class="counter">{{lol.comments}}</div>
-                </v-btn>
-              </v-col>
             </v-row>
+          </v-col>
+
+          <v-divider vertical class="vert-divider"></v-divider>
+
+          <v-col cols="auto">
+            <v-card-title class="comments">Comments</v-card-title>
+            <app-all-comments :comments="comments"></app-all-comments>
           </v-col>
         </v-row>
         <div class="overline">Added: {{formatDate(lol.createdOn)}}</div>
       </v-container>
     </v-card>
-    <v-divider class="divider"></v-divider>
-    <app-all-comments :comments="comments"></app-all-comments>
   </div>
 </template>
 
@@ -155,20 +153,28 @@ export default {
 
 .v-card__title {
   padding-top: 0px;
-  color: #007bff;
-}
-
-.v-card__title:hover {
-  padding-top: 0px;
-  color: #3f51b5;
-}
-
-a {
-  text-decoration: none;
 }
 
 .lol-details {
   text-align: center;
-  margin-top: 12px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.v-card {
+  padding: 24px;
+}
+
+.overline {
+  text-align: left;
+}
+
+.comments {
+  justify-content: center;
+}
+
+.vert-divider {
+  margin-left: 20px;
+  margin-right: 20px;
 }
 </style>
