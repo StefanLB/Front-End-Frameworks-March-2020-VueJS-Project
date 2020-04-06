@@ -3,6 +3,12 @@
     <div v-for="comment of orderedComments" :key="comment.id">
       <v-card class="d-inline-block mx-auto list-item comment">
         <v-container>
+          <v-icon
+            v-if="userIsAuthor(comment.addedBy)"
+            small
+            class="del-btn"
+            @click="delComment(comment.id, comment.lolId, comment.addedBy)"
+          >mdi-trash-can</v-icon>
           <div class="overline">By: {{comment.addedByName}}</div>
           <v-row justify="space-between">
             <v-col class="comment-content" cols="auto">
@@ -36,11 +42,13 @@ export default {
       user: {
         id: String
       },
-      orderedComments: this.comments?.sort((a, b) =>
-        a.addedOn > b.addedOn ? 1 : b.addedOn > a.addedOn ? -1 : 0
-      ),
       totalComments: this.comments?.length
     };
+  },
+  computed: {
+    orderedComments() {
+      return this.comments?.sort((a, b) => a.addedOn > b.addedOn ? 1 : b.addedOn > a.addedOn ? -1 : 0);
+    }
   },
   props: {
     comments: Array
@@ -49,8 +57,12 @@ export default {
     formatDate(timestamp) {
       return moment(timestamp.seconds * 1000, "x").fromNow();
     },
-    delComment(commentId) {
-      deleteComment(commentId, this.user.id);
+    delComment(commentId, lolId, creatorId) {
+      if (creatorId == this.user.id) {
+        const newTotalComments = this.totalComments - 1;
+        deleteComment(commentId, lolId, newTotalComments);
+        this.updateComments();
+      }
     },
     updateComments() {
       this.orderedComments = this.comments?.sort((a, b) =>
@@ -58,6 +70,9 @@ export default {
       );
 
       this.totalComments = this.comments?.length;
+    },
+    userIsAuthor(addedBy) {
+      return addedBy == this.user.id;
     }
   },
   mounted: function() {
@@ -102,5 +117,13 @@ a {
 
 .comment-content {
   padding: 0px;
+}
+
+.del-btn {
+  float: right;
+}
+
+.del-btn:hover {
+  color: #b71c1c;
 }
 </style>

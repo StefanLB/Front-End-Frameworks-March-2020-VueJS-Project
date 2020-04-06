@@ -1,20 +1,33 @@
 import { auth, firestore } from "../firebase";
 import { changeLoaderState } from "./loader.service";
 
-
-export async function addComment(commentData) {
+export async function addComment(commentData, totalComments) {
   if (auth.currentUser) {
     commentData.addedBy = auth.currentUser.uid;
     commentData.addedByName = auth.currentUser.displayName;
 
-    firestore.collection("lols").doc(commentData.lolId).update({ ["comments"]: commentData.totalComments});
+    firestore
+      .collection("lols")
+      .doc(commentData.lolId)
+      .update({ ["comments"]: totalComments });
     return await firestore.collection("comments").add(commentData);
   }
   return null;
 }
 
-export async function deleteComment(commentId) {
-  console.log(commentId);
+export async function deleteComment(commentId, lolId, totalComments) {
+  if (auth.currentUser) {
+    firestore
+      .collection("lols")
+      .doc(lolId)
+      .update({ ["comments"]: totalComments });
+
+    return await firestore
+      .collection("comments")
+      .doc(commentId)
+      .delete();
+  }
+  return null;
 }
 
 export function getComments(lolId) {
@@ -73,10 +86,12 @@ export async function addLol(lol) {
   changeLoaderState();
   if (auth.currentUser) {
     lol.addedBy = auth.currentUser.uid;
-    return await firestore.collection("lols").add(lol)
-    .finally(() => {
-      changeLoaderState();
-    });
+    return await firestore
+      .collection("lols")
+      .add(lol)
+      .finally(() => {
+        changeLoaderState();
+      });
   }
   return null;
 }

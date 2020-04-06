@@ -57,11 +57,12 @@ export default {
       const commentData = {
         content: this.content,
         addedOn: new Date(),
-        lolId: this.$route.params.id,
-        totalComments: this.totalComments + 1
+        lolId: this.$route.params.id
       };
 
-      addComment(commentData)
+      const totalComments = this.totalComments + 1;
+
+      addComment(commentData, totalComments)
         .then(() => {
           this.clear();
           console.log("Comment added successfully!");
