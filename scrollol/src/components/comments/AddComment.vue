@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <v-form v-model="valid" lazy-validation>
     <v-textarea
       v-model="content"
       :error-messages="contentErrors"
@@ -11,9 +11,9 @@
     />
     <div class="buttons">
       <v-btn small class="mr-2" @click="clear">Cancel</v-btn>
-      <v-btn small color="info" @click="submit">Post</v-btn>
+      <v-btn :disabled="!valid" small color="info" @click="submit">Post</v-btn>
     </div>
-  </form>
+  </v-form>
 </template>
 
 <script>
@@ -27,9 +27,10 @@ export default {
     content: { required, minLength: minLength(3), maxLength: maxLength(150) }
   },
   data: () => ({
-    content: ""
+    content: "",
+    valid: true
   }),
-    props: {
+  props: {
     totalComments: Number
   },
   computed: {
@@ -46,6 +47,13 @@ export default {
   },
   methods: {
     submit() {
+      this.$v.$touch();
+
+      if (!this.$v.$invalid) {
+        this.postComment();
+      }
+    },
+    postComment() {
       const commentData = {
         content: this.content,
         addedOn: new Date(),
