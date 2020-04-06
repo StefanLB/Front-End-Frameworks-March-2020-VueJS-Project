@@ -1,4 +1,5 @@
 import { auth, firestore } from "../firebase";
+import { changeLoaderState } from "./loader.service";
 
 export async function addComment(commentData) {
   if (auth.currentUser) {
@@ -68,9 +69,13 @@ export function getCategories() {
 }
 
 export async function addLol(lol) {
+  changeLoaderState();
   if (auth.currentUser) {
     lol.addedBy = auth.currentUser.uid;
-    return await getLols().add(lol);
+    return await firestore.collection("lols").add(lol)
+    .finally(() => {
+      changeLoaderState();
+    });
   }
   return null;
 }

@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <v-form v-model="valid" lazy-validation>
     <v-text-field
       v-model="title"
       :error-messages="titleErrors"
@@ -36,9 +36,9 @@
       @blur="$v.category.$touch()"
     ></v-select>
 
-    <v-btn class="mr-4" @click="submit">submit</v-btn>
-    <v-btn @click="clear">clear</v-btn>
-  </form>
+    <v-btn class="mr-4" :disabled="!valid" color="success" @click="submit">submit</v-btn>
+    <v-btn @click="clear" color="error">clear</v-btn>
+  </v-form>
 </template>
 
 <script>
@@ -67,7 +67,8 @@ export default {
     description: "",
     imageUrl: "",
     category: null,
-    categories: []
+    categories: [],
+    valid: true
   }),
   computed: {
     categoryErrors() {
@@ -107,34 +108,39 @@ export default {
   },
   methods: {
     submit() {
-      const currentDate = new Date();
-      const lolData = {
-        title: this.title,
-        description: this.description,
-        imageUrl: this.imageUrl,
-        category: this.category,
-        likes: [],
-        dislikes: [],
-        comments: [],
-        createdOn: currentDate,
-        updatedOn: currentDate
-      };
+      this.$v.$touch();
 
-      addLol(lolData)
-        .then(() => {
-          console.log("Lol successfully created!");
-          this.clear();
-        })
-        .catch(function(error) {
-          console.log("Error creating Lol!" + error);
-        });
+      if (!this.$v.$invalid) {
+        const currentDate = new Date();
+        const lolData = {
+          title: this.title,
+          description: this.description,
+          imageUrl: this.imageUrl,
+          category: this.category,
+          likes: [],
+          dislikes: [],
+          comments: 0,
+          createdOn: currentDate,
+          updatedOn: currentDate
+        };
+
+        addLol(lolData)
+          .then(() => {
+            console.log("Lol successfully created!");
+            this.clear();
+            this.$router.push("/");
+          })
+          .catch(function(error) {
+            console.log("Error creating Lol!" + error);
+          });
+      }
     },
     clear() {
       this.$v.$reset();
       this.title = "";
       this.description = "";
       this.imageUrl = "";
-      this.select = null;
+      this.category = "";
     }
   },
   created: function() {
