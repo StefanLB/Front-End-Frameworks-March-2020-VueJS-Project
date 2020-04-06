@@ -31,10 +31,9 @@ import { logOut } from "../../services/auth.service"
 export default {
   data() {
     return {
-      user: {
-        loggedIn: false,
-        data: {}
-      }
+      loggedIn: false,
+      user: null,
+      updatedDisplayName: null,
     };
   },
   computed: {
@@ -54,25 +53,30 @@ export default {
       return menuItems;
     },
     userLoggedIn() {
-      return this.user.loggedIn;
+      return this.loggedIn;
     },
     getDisplayName: function() {
-      return this.user.data.displayName ? this.user.data.displayName : this.user.data.email;
+      return this.updatedDisplayName ? this.updatedDisplayName : this.user.displayName;
     }
   },
   methods: {
     async logoutFromFirebase() {
       await logOut();
+    },
+    setDisplayName(newName) {
+      this.updatedDisplayName = newName;
     }
   },
   mounted: function() {
+    this.$root.$on('dname-changed', this.setDisplayName);
+
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        this.user.loggedIn = true;
-        this.user.data = user;
+        this.loggedIn = true;
+        this.user = user;
       } else {
-        this.user.loggedIn = false;
-        this.user.data = {};
+        this.loggedIn = false;
+        this.user = null;
       }
     });
   }

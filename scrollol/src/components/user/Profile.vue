@@ -32,7 +32,12 @@
                   <v-text-field v-model="email" label="E-mail" disabled></v-text-field>
                 </v-flex>
                 <v-flex xs12 md6>
-                  <v-text-field v-model="user.phoneNumber" :rules="phoneRules" label="Phone Number" required></v-text-field>
+                  <v-text-field
+                    v-model="user.phoneNumber"
+                    :rules="phoneRules"
+                    label="Phone Number"
+                    required
+                  ></v-text-field>
                 </v-flex>
                 <v-flex xs12 md12>
                   <v-text-field
@@ -81,12 +86,16 @@ export default {
     email: null,
     phoneRules: [
       v => !!v || "Phone number is required",
-      v => /^\+[0-9]+$/.test(v) || "Phone number must start with '+' and contain only digits after."
+      v =>
+        /^\+[0-9]+$/.test(v) ||
+        "Phone number must start with '+' and contain only digits after."
     ],
     photoUrl: null,
     photoUrlRules: [
       v => !!v || "Photo URL is required",
-      v => /^http[s]{0,1}:\/\/.*$/.test(v) || "Photo URL must start with 'http://' or 'https://'"
+      v =>
+        /^http[s]{0,1}:\/\/.*$/.test(v) ||
+        "Photo URL must start with 'http://' or 'https://'"
     ]
   }),
   methods: {
@@ -103,8 +112,8 @@ export default {
         photoURL: this.photoUrl
       };
 
-      firebase.auth().currentUser.displayName = this.user.firstName;
-      
+      this.$root.$emit('dname-changed', this.user.firstName);
+
       await updateUser(user);
     }
   },

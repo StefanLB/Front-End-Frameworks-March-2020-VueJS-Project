@@ -1,6 +1,7 @@
 import { auth, firestore } from "../firebase";
 import { changeLoaderState } from "./loader.service";
 
+
 export async function addComment(commentData) {
   if (auth.currentUser) {
     commentData.addedBy = auth.currentUser.uid;

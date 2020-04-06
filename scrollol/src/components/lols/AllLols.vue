@@ -1,6 +1,9 @@
 <template>
   <div>
-    <v-subheader>Browse LoLs Below</v-subheader>
+    <div class="heading">
+    <h4 >Browse our fine collection of LoLs below</h4>
+    <p v-if="filterCategory" style="font-style: italic;">(Filtered by {{filterCategory}})</p>
+    </div>
     <div v-for="lol of lols" :key="lol.id">
       <div v-if="matchesCategory(lol.category)">
         <v-card class="d-inline-block mx-auto list-item">
@@ -72,6 +75,11 @@ export default {
         id: String
       }
     };
+  },
+  computed: {
+    showGreeting() {
+      return this.filterCategory ? ` (Filtered by ${this.filterCategory})` : 'Browse our fine collection of LoLs below';
+    }
   },
   props: {
     lols: Array,
@@ -152,9 +160,9 @@ export default {
   width: 98%;
 }
 
-// .list-item {
-//     margin-left: 100px;
-// }
+.heading {
+  margin-bottom: 24px;
+}
 
 .md-list {
   margin: 10%;
