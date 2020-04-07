@@ -1,6 +1,25 @@
 import { auth, firestore } from "../firebase";
 import { changeLoaderState } from "./loader.service";
 
+export async function deleteLol(lolId, addedById) {
+  if (auth.currentUser && auth.currentUser.uid == addedById) {
+    firestore
+      .collection("comments")
+      .where("lolId", "==", lolId)
+      .get()
+      .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+          doc.ref.delete();
+        });
+      });
+
+    return await firestore
+      .collection("lols")
+      .doc(lolId)
+      .delete();
+  }
+}
+
 export async function addComment(commentData, totalComments) {
   if (auth.currentUser) {
     commentData.addedBy = auth.currentUser.uid;
@@ -31,7 +50,10 @@ export async function deleteComment(commentId, lolId, totalComments) {
 }
 
 export function getComments(lolId) {
-  return firestore.collection("comments").where("lolId", "==", lolId).orderBy("addedOn", "asc");
+  return firestore
+    .collection("comments")
+    .where("lolId", "==", lolId)
+    .orderBy("addedOn", "asc");
 }
 
 export async function getLol(lolId) {
@@ -79,7 +101,10 @@ export function getLols() {
 }
 
 export async function getUserLols() {
-  return await firestore.collection("lols").where("addedBy", "==", auth.currentUser.uid).orderBy("createdOn", "desc");
+  return await firestore
+    .collection("lols")
+    .where("addedBy", "==", auth.currentUser.uid)
+    .orderBy("createdOn", "desc");
 }
 
 export function getCategories() {

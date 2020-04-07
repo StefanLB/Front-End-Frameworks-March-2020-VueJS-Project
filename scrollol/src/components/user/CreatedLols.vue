@@ -9,7 +9,7 @@
           <div class="added-format">Added: {{formatDate(lol.createdOn)}}</div>
           <template v-slot:actions>
             <v-icon color="primary" class="mr-2">mdi-chevron-down-circle</v-icon>
-            <v-icon color="error" @click.stop="deleteLol(lol.id)">mdi-close-circle</v-icon>
+            <v-icon color="error" @click.stop="delLol(lol.id, lol.addedBy)">mdi-close-circle</v-icon>
           </template>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
@@ -60,6 +60,7 @@
 
 <script>
 import { getUserLols } from "../../services/firestore.service";
+import { deleteLol } from "../../services/firestore.service";
 import { changeLoaderState } from "../../services/loader.service";
 import moment from "moment";
 import AppStats from "./Stats";
@@ -82,26 +83,42 @@ export default {
     formatDate(timestamp) {
       return moment(timestamp.seconds * 1000, "x").fromNow();
     },
-    deleteLol(lolId) {
-      console.log("Deleting lol with id: " + lolId);
+    async delLol(lolId, addedById) {
+      changeLoaderState();
+
+      await deleteLol(lolId, addedById)
+      .then(() => {
+          this.clearStats();
+          this.updateStats();
+      })
+      .finally(changeLoaderState());
+    },
+    clearStats() {
+        this.totals.posts = 0;
+        this.totals.likes = 0;
+        this.totals.dislikes = 0;
+        this.totals.points = 0;
+        this.totals.comments = 0;
+    },
+    updateStats() {
+        this.totals.posts = this.lols.length;
+        this.lols.forEach(l => {
+          this.totals.likes += l.likes.length;
+          this.totals.dislikes += l.dislikes.length;
+          this.totals.points += l.likes.length - l.dislikes.length;
+          this.totals.comments += l.comments;
+    });
     }
   },
   mounted: async function() {
     changeLoaderState();
     this.$bind("lols", await getUserLols())
-    .then(() => {
-        this.totals.posts = this.lols.length;
-        this.lols.forEach(l => {
-            this.totals.likes += l.likes.length;
-            this.totals.dislikes += l.dislikes.length;
-            this.totals.points += (l.likes.length - l.dislikes.length);
-            this.totals.comments += l.comments;
+      .then(() => {
+        this.updateStats();
         })
-
-    })
-    .finally(() => {
-        changeLoaderState()
-    });
+      .finally(() => {
+        changeLoaderState();
+      });
   }
 };
 </script>
@@ -136,7 +153,7 @@ export default {
 
 .stats {
   position: fixed;
-  top: 33%;
+  top: 19%;
   right: 0%;
   z-index: 10;
 }
