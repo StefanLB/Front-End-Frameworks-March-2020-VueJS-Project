@@ -1,9 +1,9 @@
 <template>
   <v-toolbar class="toolbar" extension-height="0" dense>
-    <v-btn to="/home">
-      <v-icon>mdi-script-text-outline</v-icon>
+    <v-btn class="home-btn" to="/home">
+      <v-icon class="mr-2">mdi-script-text-outline</v-icon>
       <v-toolbar-title>
-        <span>ScrolLol</span>
+        ScrolLol
       </v-toolbar-title>
     </v-btn>
     <v-spacer></v-spacer>
@@ -112,6 +112,10 @@ export default {
 </script>
 
 <style scoped>
+.v-btn:not(.v-btn--round).v-size--default {
+  height: 48px;
+}
+
 .v-toolbar {
   flex: 0;
 }

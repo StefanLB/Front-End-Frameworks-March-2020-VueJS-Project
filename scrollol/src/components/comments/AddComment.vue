@@ -11,7 +11,7 @@
     />
     <div class="buttons">
       <v-btn small class="mr-2" @click="clear">Cancel</v-btn>
-      <v-btn :disabled="!valid" small color="info" @click="submit">Post</v-btn>
+      <v-btn :disabled="!valid" small color="info" @keyup.enter="submit" @click="submit">Post</v-btn>
     </div>
   </v-form>
 </template>

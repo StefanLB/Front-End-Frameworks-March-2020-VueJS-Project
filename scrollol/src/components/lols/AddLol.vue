@@ -1,44 +1,47 @@
 <template>
-  <v-form v-model="valid" lazy-validation>
-    <v-text-field
-      v-model="title"
-      :error-messages="titleErrors"
-      :counter="30"
-      label="Title"
-      required
-      @input="$v.title.$touch()"
-      @blur="$v.title.$touch()"
-    ></v-text-field>
-    <v-text-field
-      v-model="description"
-      :error-messages="descriptionErrors"
-      :counter="150"
-      label="Description"
-      required
-      @input="$v.description.$touch()"
-      @blur="$v.description.$touch()"
-    ></v-text-field>
-    <v-text-field
-      v-model="imageUrl"
-      :error-messages="imageUrlErrors"
-      label="Image URL"
-      required
-      @input="$v.imageUrl.$touch()"
-      @blur="$v.imageUrl.$touch()"
-    ></v-text-field>
-    <v-select
-      v-model="category"
-      :items="categories.map(c => c.category)"
-      :error-messages="categoryErrors"
-      label="Category"
-      required
-      @change="$v.category.$touch()"
-      @blur="$v.category.$touch()"
-    ></v-select>
+  <div>
+    <h5 class="heading">Just fill out the fields below to share your masterpiece with the world!</h5>
+    <v-form v-model="valid" lazy-validation>
+      <v-text-field
+        v-model="title"
+        :error-messages="titleErrors"
+        :counter="30"
+        label="Title"
+        required
+        @input="$v.title.$touch()"
+        @blur="$v.title.$touch()"
+      ></v-text-field>
+      <v-text-field
+        v-model="description"
+        :error-messages="descriptionErrors"
+        :counter="150"
+        label="Description"
+        required
+        @input="$v.description.$touch()"
+        @blur="$v.description.$touch()"
+      ></v-text-field>
+      <v-text-field
+        v-model="imageUrl"
+        :error-messages="imageUrlErrors"
+        label="Image URL"
+        required
+        @input="$v.imageUrl.$touch()"
+        @blur="$v.imageUrl.$touch()"
+      ></v-text-field>
+      <v-select
+        v-model="category"
+        :items="categories.map(c => c.category)"
+        :error-messages="categoryErrors"
+        label="Category"
+        required
+        @change="$v.category.$touch()"
+        @blur="$v.category.$touch()"
+      ></v-select>
 
-    <v-btn class="mr-4" :disabled="!valid" color="success" @click="submit">submit</v-btn>
-    <v-btn @click="clear" color="error">clear</v-btn>
-  </v-form>
+      <v-btn class="mr-4" :disabled="!valid" color="success" @click="submit">submit</v-btn>
+      <v-btn @click="clear" color="error">clear</v-btn>
+    </v-form>
+  </div>
 </template>
 
 <script>
@@ -155,5 +158,11 @@ form {
   text-align: center;
   margin: 0 auto;
   padding: 10px;
+}
+
+.heading {
+  margin-top: 48px;
+  margin-bottom: 24px;
+  text-align: center;
 }
 </style>

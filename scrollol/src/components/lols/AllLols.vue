@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="heading">
-    <h4 >Browse our fine collection of LoLs below</h4>
-    <p v-if="filterCategory" style="font-style: italic;">(Filtered by {{filterCategory}})</p>
+      <h4>Browse our fine collection of LoLs below</h4>
+      <p v-if="filterCategory" style="font-style: italic;">(Filtered by {{filterCategory}})</p>
     </div>
     <div v-for="lol of lols" :key="lol.id">
       <div v-if="matchesCategory(lol.category)">
@@ -12,8 +12,8 @@
               <v-col cols="auto">
                 <router-link :to="'/lols/details/' + lol.id" target="_blank">
                   <v-card-title>{{lol.title}}</v-card-title>
+                  <v-img width="500" :src="lol.imageUrl"></v-img>
                 </router-link>
-                <v-img width="500" :src="lol.imageUrl"></v-img>
               </v-col>
               <v-col cols="auto" class="text-center pl-0">
                 <v-row class="flex-column ma-0 fill-height" justify="center">
@@ -78,7 +78,9 @@ export default {
   },
   computed: {
     showGreeting() {
-      return this.filterCategory ? ` (Filtered by ${this.filterCategory})` : 'Browse our fine collection of LoLs below';
+      return this.filterCategory
+        ? ` (Filtered by ${this.filterCategory})`
+        : "Browse our fine collection of LoLs below";
     }
   },
   props: {
@@ -178,16 +180,16 @@ export default {
 }
 
 .v-card__title {
-  padding-top:0px;
+  padding-top: 0px;
   color: #007bff;
 }
 
 .v-card__title:hover {
-  padding-top:0px;
+  padding-top: 0px;
   color: #3f51b5;
 }
 
 a {
-  text-decoration:none;
+  text-decoration: none;
 }
 </style>

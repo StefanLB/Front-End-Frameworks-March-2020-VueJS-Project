@@ -31,7 +31,7 @@ export async function deleteComment(commentId, lolId, totalComments) {
 }
 
 export function getComments(lolId) {
-  return firestore.collection("comments").where("lolId", "==", lolId);
+  return firestore.collection("comments").where("lolId", "==", lolId).orderBy("addedOn", "asc");
 }
 
 export async function getLol(lolId) {
@@ -76,6 +76,10 @@ export function removeDislike(lolId, dislikes, userId) {
 
 export function getLols() {
   return firestore.collection("lols").orderBy("createdOn", "desc");
+}
+
+export async function getUserLols() {
+  return await firestore.collection("lols").where("addedBy", "==", auth.currentUser.uid).orderBy("createdOn", "desc");
 }
 
 export function getCategories() {
