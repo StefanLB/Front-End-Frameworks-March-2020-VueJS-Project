@@ -16,6 +16,32 @@
     </v-toolbar-items>
     <v-toolbar-items class="hidden-xs-only" v-else>
       <v-btn to="/user/profile">Hello, {{getDisplayName}}</v-btn>
+      <v-menu
+        open-on-hover
+        close-on-content-click
+        offset-y
+      >
+        <template v-slot:activator="{ on }">
+          <v-btn v-on="on">Navigate Lols</v-btn>
+        </template>
+        <v-list>
+          <v-list-item>
+            <router-link to="/">
+              <v-list-item-title>ALL LOLS</v-list-item-title>
+            </router-link>
+          </v-list-item>
+          <v-list-item>
+            <router-link to="/user/lols">
+              <v-list-item-title>MY LOLS</v-list-item-title>
+            </router-link>
+          </v-list-item>
+          <v-list-item>
+            <router-link to="/lols/add">
+              <v-list-item-title>CREATE LOL</v-list-item-title>
+            </router-link>
+          </v-list-item>
+        </v-list>
+      </v-menu>
       <v-btn @click="logoutFromFirebase">
         <v-icon>delete_sweep</v-icon>Logout
       </v-btn>
@@ -26,7 +52,7 @@
 
 <script>
 import firebase from "firebase/app";
-import { logOut } from "../../services/auth.service"
+import { logOut } from "../../services/auth.service";
 
 export default {
   data() {
@@ -56,7 +82,9 @@ export default {
       return this.loggedIn;
     },
     getDisplayName: function() {
-      return this.updatedDisplayName ? this.updatedDisplayName : this.user.displayName;
+      return this.updatedDisplayName
+        ? this.updatedDisplayName
+        : this.user.displayName;
     }
   },
   methods: {
@@ -68,7 +96,7 @@ export default {
     }
   },
   mounted: function() {
-    this.$root.$on('dname-changed', this.setDisplayName);
+    this.$root.$on("dname-changed", this.setDisplayName);
 
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
