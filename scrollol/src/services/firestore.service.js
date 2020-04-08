@@ -97,7 +97,7 @@ export function removeDislike(lolId, dislikes, userId) {
 }
 
 export function getLols() {
-  return firestore.collection("lols").orderBy("createdOn", "desc");
+  return firestore.collection("lols").orderBy("createdOn", "desc").limit(5);
 }
 
 export async function getUserLols() {
@@ -125,20 +125,8 @@ export async function addLol(lol) {
   return null;
 }
 
-export async function setUserData(data) {
-  return await setData(data, `users/${data.uid}`);
-}
-
 export function getUsersCollection() {
   return firestore.collection("users");
-}
-
-export function getLoggedInUser() {
-  return auth.currentUser;
-}
-
-export function getUser(id) {
-  return getUsersCollection().doc(id);
 }
 
 export function getMyProfile() {
@@ -150,16 +138,8 @@ export function getMyProfile() {
   return null;
 }
 
-export function getLolsByCreator(id) {
-  return firestore.collection("lols").where("addedBy", "==", id);
-}
-
-export function getMyLols() {
-  if (auth.currentUser) {
-    const uid = auth.currentUser.uid;
-    return getLolsByCreator(uid);
-  }
-  return null;
+export async function setUserData(data) {
+  return await setData(data, `users/${data.uid}`);
 }
 
 async function setData(data, ref) {

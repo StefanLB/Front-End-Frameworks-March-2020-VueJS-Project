@@ -11,7 +11,7 @@
 import { getLols } from "../services/firestore.service";
 import AppAllLols from "./lols/AllLols";
 import AppLeftNavigation from "../components/shared/LeftNavigation";
-import { changeLoaderState } from "../services/loader.service"
+import { changeLoaderState } from "../services/loader.service";
 
 export default {
   name: "Home",
@@ -26,14 +26,27 @@ export default {
     };
   },
   created: async function() {
-    changeLoaderState()
-    this.$bind("lols", await getLols())
-    .then(() => changeLoaderState());
+    changeLoaderState();
+    this.$bind("lols", await getLols()).then(() => changeLoaderState());
   },
+  // mounted() {
+  //   this.scroll();
+  // },
   methods: {
     addFilter(category) {
       this.filterCategory = category;
     }
+    // async scroll() {
+    //   window.onscroll = async () => {
+    //     let bottomOfWindow =
+    //       document.documentElement.scrollTop + window.innerHeight ===
+    //       document.documentElement.offsetHeight;
+
+    //     if (bottomOfWindow) {
+    //       console.log('Reached bottom of window!');
+    //     }
+    //   };
+    // }
   }
 };
 </script>
