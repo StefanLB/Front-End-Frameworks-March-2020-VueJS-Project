@@ -11,79 +11,21 @@ import LolDetails from "./components/lols/LolDetails.vue";
 import UserProfile from "./components/user/Profile.vue";
 import CreatedLols from "./components/user/CreatedLols.vue";
 
-
 import { auth } from "./firebase";
 
 Vue.use(VueRouter);
 
 const routes = [
-  {
-    path: "/",
-    name: "Home",
-    component: Home
-  },
-  {
-    path: "/about",
-    name: "About",
-    component: About
-  },
-  {
-    path: "/contact",
-    name: "Contact",
-    component: Contact
-  },
-  {
-    path: "/login",
-    name: "Login",
-    component: Login,
-    meta: {
-      requiresAnon: true
-    }
-  },
-  {
-    path: "/register",
-    name: "Register",
-    component: Register,
-    meta: {
-      requiresAnon: true
-    }
-  },
-  {
-    path: "/lols/add",
-    name: "AddLol",
-    component: AddLol,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: "/user/profile",
-    name: "UserProfile",
-    component: UserProfile,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: "/user/lols",
-    name: "CreatedLols",
-    component: CreatedLols,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: "/lols/details/:id",
-    component: LolDetails,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: "*",
-    redirect: "/",
-    component: Home
-  }
+  { path: "/", name: "Home", component: Home },
+  { path: "/about", name: "About", component: About },
+  { path: "/contact", name: "Contact", component: Contact },
+  { path: "/login", name: "Login", component: Login, meta: { requiresAnon: true }},
+  { path: "/register", name: "Register", component: Register, meta: { requiresAnon: true }},
+  { path: "/lols/add", name: "AddLol", component: AddLol, meta: { requiresAuth: true }},
+  { path: "/lols/details/:id", component: LolDetails, meta: { requiresAuth: true }},
+  { path: "/user/profile", name: "UserProfile", component: UserProfile, meta: { requiresAuth: true }},
+  { path: "/user/lols", name: "CreatedLols", component: CreatedLols, meta: { requiresAuth: true }},
+  { path: "*", redirect: "/", component: Home }
 ];
 
 export const router = new VueRouter({
@@ -104,5 +46,4 @@ router.beforeEach((to, from, next) => {
     next();
   }
 
-  //TODO: fix redirect for logged in users who try to access Login or Register
 });
