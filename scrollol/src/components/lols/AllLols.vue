@@ -39,7 +39,7 @@
                   <v-col class="px-0">
                     <v-btn icon @click="viewLolDetails(lol.id)">
                       <v-icon
-                        v-bind:style="{ color: lol.comments > 0 ? '#0D47A1' : '#64B5F6'}"
+                        v-bind:style="{ color: lol.comments > 0 ? '#35A0AE' : '#A0DDE5'}"
                       >comment</v-icon>
                       <div class="counter">{{lol.comments}}</div>
                     </v-btn>
@@ -117,7 +117,7 @@ export default {
       } else {
         this.$root.$emit("show-snackbar", {
           content: "You need to be logged-in in order to vote!",
-          color: "info"
+          color: "#FFAA00"
         });
       }
     },
@@ -138,7 +138,7 @@ export default {
       } else {
         this.$root.$emit("show-snackbar", {
           content: "You need to be logged-in in order to vote!",
-          color: "info"
+          color: "#FFAA00"
         });
       }
     },
@@ -148,7 +148,7 @@ export default {
       } else {
         this.$root.$emit("show-snackbar", {
           content: "Only logged-in users can comment and view post details!",
-          color: "info"
+          color: "#FFAA00"
         });
       }
     }
@@ -191,12 +191,12 @@ export default {
 
 .v-card__title {
   padding-top: 0px;
-  color: #007bff;
+  color: #35A0AE;
 }
 
 .v-card__title:hover {
   padding-top: 0px;
-  color: #3f51b5;
+  color: #FFAA00;
 }
 
 .lol-details:hover {

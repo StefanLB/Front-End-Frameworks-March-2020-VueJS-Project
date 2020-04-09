@@ -29,7 +29,7 @@
       </div>
     </v-card-text>
     <v-card-actions>
-      <v-btn color="success" @click="goBack()">COUNTRY ROADS</v-btn>
+      <v-btn style="color: white;" color="#35A0AE" @click="goBack()">COUNTRY ROADS</v-btn>
       <v-btn color="error" @click="goBack()">TAKE ME HOME</v-btn>
     </v-card-actions>
   </v-card>

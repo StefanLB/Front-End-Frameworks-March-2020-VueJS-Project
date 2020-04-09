@@ -69,7 +69,8 @@
             <v-btn
               class="reg-button"
               :disabled="!valid"
-              color="success"
+              color="#35A0AE"
+              style="color: white;"
               @click="validateAndRegister"
             >Register</v-btn>
             <v-btn class="reg-button" color="error" @click="reset">Reset Form</v-btn>
@@ -151,7 +152,7 @@ export default {
         .then(() => {
           this.$root.$emit("show-snackbar", {
             content: "Registered successfully!",
-            color: "success"
+            color: "#35A0AE"
           });
         })
         .catch(() => {

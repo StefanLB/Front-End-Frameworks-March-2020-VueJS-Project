@@ -26,12 +26,12 @@ export default {
       {
         name: "posts",
         icon: "mdi-post",
-        color: "teal"
+        color: "#35A0AE"
       },
       {
         name: "points",
         icon: "mdi-star-four-points",
-        color: "yellow"
+        color: "#FFAA00"
       },
       {
         name: "likes",
@@ -46,7 +46,7 @@ export default {
       {
         name: "comments",
         icon: "mdi-message-reply-text",
-        color: "#0D47A1"
+        color: "#35A0AE"
       }
     ]
   }),

@@ -33,4 +33,8 @@ export default {
   margin-top: 51px;
   padding: 0px;
 }
+
+.theme--light.v-application {
+  background-color: #F2EDE8;
+}
 </style>

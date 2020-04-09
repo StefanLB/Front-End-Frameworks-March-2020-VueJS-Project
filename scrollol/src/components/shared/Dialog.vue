@@ -12,7 +12,7 @@
           <v-btn color="red darken-1" text @click="closeAndReturnResult(false)">Cancel</v-btn>
 
           <v-btn
-            color="green darken-1"
+            color="#35A0AE"
             text
             @click="closeAndReturnResult(true)"
           >{{data.confirmButtonName}}</v-btn>

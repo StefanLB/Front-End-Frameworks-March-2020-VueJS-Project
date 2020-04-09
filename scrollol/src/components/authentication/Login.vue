@@ -23,9 +23,9 @@
                 </v-flex>
               </v-layout>
             </v-container>
-            <v-btn :disabled="!valid" color="success" @click="validateAndLogin">Login</v-btn>
+            <v-btn style="color: white;" :disabled="!valid" color="#35A0AE" @click="validateAndLogin">Login</v-btn>
             <v-btn color="error" @click="reset">Reset Form</v-btn>
-            <v-btn style="float: right;" color="primary" @click="loginGoogle">
+            <v-btn style="float: right; color: white;" color="#FFAA00" @click="loginGoogle">
               <v-icon>mdi-google</v-icon>Login with Google
             </v-btn>
           </v-card>

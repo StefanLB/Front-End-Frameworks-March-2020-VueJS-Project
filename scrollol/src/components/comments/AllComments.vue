@@ -100,7 +100,7 @@ export default {
           .then(() => {
             this.$root.$emit("show-snackbar", {
               content: "Comment successfully deleted!",
-              color: "success"
+              color: "#35A0AE"
             });
           })
           .catch(() => {

@@ -50,7 +50,7 @@
               </v-layout>
             </v-container>
             <div class="buttons">
-              <v-btn :disabled="!valid" color="success" @click="validateAndUpdate">Update Profile</v-btn>
+              <v-btn :disabled="!valid" color="#35A0AE" style="color: white;" @click="validateAndUpdate">Update Profile</v-btn>
               <v-btn class="error" color="error" to="/">Cancel</v-btn>
             </div>
           </v-card>
@@ -118,7 +118,7 @@ export default {
         .then(() => {
           this.$root.$emit("show-snackbar", {
             content: "Profile successfully updated!",
-            color: "success"
+            color: "#35A0AE"
           });
         })
         .catch(() => {

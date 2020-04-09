@@ -1,6 +1,7 @@
 <template>
   <div>
     <h5 class="heading">Just fill out the fields below to share your masterpiece with the world!</h5>
+    <v-card>
     <v-form v-model="valid" lazy-validation>
       <v-text-field
         v-model="title"
@@ -38,10 +39,11 @@
         @blur="$v.category.$touch()"
       ></v-select>
 
-      <v-btn class="mr-4" :disabled="!valid" color="success" @click="validateAndOpenDialog">submit</v-btn>
+      <v-btn class="mr-4" :disabled="!valid" color="#35A0AE" style="color: white;" @click="validateAndOpenDialog">submit</v-btn>
       <v-btn @click="clear" color="error">clear</v-btn>
     </v-form>
     <app-dialog :data="dialogData" @dialog-result="submit"></app-dialog>
+    </v-card>
   </div>
 </template>
 
@@ -154,7 +156,7 @@ export default {
         .then(() => {
           this.$root.$emit("show-snackbar", {
             content: "Lol successfully added!",
-            color: "success"
+            color: "#35A0AE"
           });
 
           this.clear();
@@ -182,11 +184,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-form {
+.v-card {
   width: 50%;
   text-align: center;
   margin: 0 auto;
-  padding: 10px;
+  padding: 20px;
 }
 
 .heading {

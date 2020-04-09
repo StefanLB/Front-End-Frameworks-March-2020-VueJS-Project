@@ -1,9 +1,8 @@
 <template>
   <v-container>
-    <v-card max-width="250">
+    <v-card tile max-width="250">
       <v-navigation-drawer
         v-model="drawer"
-        color="teal"
         expand-on-hover
         fixed
         class="left-nav"
@@ -79,7 +78,7 @@ export default {
 <style lang="scss" scoped>
 .left-nav {
   margin-top: 48px;
-  background: linear-gradient(to bottom, #00796b, #009688);
+  background: linear-gradient(to bottom, #35A0AE 40%, #FFAA00 80%);
 }
 
 .categories {

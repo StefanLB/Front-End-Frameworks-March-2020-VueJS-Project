@@ -4,7 +4,8 @@
     :indeterminate="true"
     class="ma-0 loader-indeterminate"
     height="5"
-    style="top: -2px;"
+    color="#FFAA00"
+    style="top: -1px;"
   ></v-progress-linear>
 </template>
 

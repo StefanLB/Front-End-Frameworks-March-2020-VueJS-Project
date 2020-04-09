@@ -11,7 +11,7 @@
     />
     <div class="buttons">
       <v-btn small class="mr-2" @click="clear">Cancel</v-btn>
-      <v-btn :disabled="!valid" small color="info" @keyup.enter="submit" @click="submit">Post</v-btn>
+      <v-btn :disabled="!valid" small color="#35A0AE" style="color: white;" @keyup.enter="submit" @click="submit">Post</v-btn>
     </div>
   </v-form>
 </template>
@@ -67,7 +67,7 @@ export default {
         .then(() => {
           this.$root.$emit("show-snackbar", {
             content: "Comment successfully added!",
-            color: "success"
+            color: "#35A0AE"
           });
         })
         .catch(() => {

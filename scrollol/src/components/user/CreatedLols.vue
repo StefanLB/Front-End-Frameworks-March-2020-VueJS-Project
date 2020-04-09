@@ -8,7 +8,7 @@
           <div style="font-size: large;">{{lol.title}}</div>
           <div class="added-format">Added: {{formatDate(lol.createdOn)}}</div>
           <template v-slot:actions>
-            <v-icon color="primary" class="mr-2">mdi-chevron-down-circle</v-icon>
+            <v-icon color="#35A0AE" class="mr-2">mdi-chevron-down-circle</v-icon>
             <v-icon
               color="error"
               @click.stop="openConfirmDialog(lol.id, lol.addedBy)"
@@ -45,7 +45,7 @@
                   <v-col class="px-0">
                     <v-btn icon :to="'/lols/details/' + lol.id" target="_blank">
                       <v-icon
-                        v-bind:style="{ color: lol.comments > 0 ? '#0D47A1' : '#64B5F6'}"
+                        v-bind:style="{ color: lol.comments > 0 ? '#35A0AE' : '#A0DDE5'}"
                       >comment</v-icon>
                       <div class="counter">{{lol.comments}}</div>
                     </v-btn>
@@ -111,7 +111,7 @@ export default {
 
           this.$root.$emit("show-snackbar", {
             content: "Lol successfully deleted!",
-            color: "success"
+            color: "#35A0AE"
           });
         })
         .catch(() => {
