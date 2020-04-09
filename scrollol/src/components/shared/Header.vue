@@ -101,9 +101,7 @@ export default {
       this.updatedDisplayName = newName;
     }
   },
-  mounted: function() {
-    this.$root.$on("dname-changed", this.setDisplayName);
-
+  beforeMount: function() {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.loggedIn = true;
@@ -113,6 +111,9 @@ export default {
         this.user = null;
       }
     });
+  },
+  mounted: function() {
+    this.$root.$on("dname-changed", this.setDisplayName);
   }
 };
 </script>

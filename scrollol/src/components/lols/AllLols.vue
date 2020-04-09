@@ -10,10 +10,10 @@
           <v-container>
             <v-row justify="space-between">
               <v-col cols="auto">
-                <router-link :to="'/lols/details/' + lol.id" target="_blank">
+                <div class="lol-details" @click="viewLolDetails(lol.id)">
                   <v-card-title>{{lol.title}}</v-card-title>
                   <v-img width="500" :src="lol.imageUrl"></v-img>
-                </router-link>
+                </div>
               </v-col>
               <v-col cols="auto" class="text-center pl-0">
                 <v-row class="flex-column ma-0 fill-height" justify="center">
@@ -37,7 +37,7 @@
                   </v-col>
 
                   <v-col class="px-0">
-                    <v-btn icon :to="'/lols/details/' + lol.id" target="_blank">
+                    <v-btn icon @click="viewLolDetails(lol.id)">
                       <v-icon
                         v-bind:style="{ color: lol.comments > 0 ? '#0D47A1' : '#64B5F6'}"
                       >comment</v-icon>
@@ -114,8 +114,12 @@ export default {
         } else {
           addLike(lol.id, lol.likes, this.user.id);
         }
+      } else {
+        this.$root.$emit("show-snackbar", {
+          content: "You need to be logged-in in order to vote!",
+          color: "error"
+        });
       }
-      //TODO : if not logged in - notify user to log in
     },
     dislikeLol(lol) {
       const alreadyDisliked = lol.dislikes.indexOf(this.user.id) > -1;
@@ -131,8 +135,22 @@ export default {
         } else {
           addDislike(lol.id, lol.dislikes, this.user.id);
         }
+      } else {
+        this.$root.$emit("show-snackbar", {
+          content: "You need to be logged-in in order to vote!",
+          color: "error"
+        });
       }
-      //TODO : if not logged in - notify user to log in
+    },
+    viewLolDetails(lolId) {
+      if (this.user.loggedIn) {
+        window.open("/lols/details/" + lolId, '_blank');
+      } else {
+        this.$root.$emit("show-snackbar", {
+          content: "Only logged-in users can comment and view post details!",
+          color: "error"
+        });
+      }
     }
   },
   mounted: function() {
@@ -187,6 +205,10 @@ export default {
 .v-card__title:hover {
   padding-top: 0px;
   color: #3f51b5;
+}
+
+.lol-details:hover {
+  cursor: pointer;
 }
 
 a {
