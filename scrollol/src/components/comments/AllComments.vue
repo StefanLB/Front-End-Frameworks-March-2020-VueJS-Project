@@ -64,7 +64,7 @@ export default {
   },
   computed: {
     totalComments() {
-      if(this.comments){
+      if (this.comments) {
         return this.comments.length;
       }
 
@@ -97,18 +97,18 @@ export default {
       if (this.delAddedById == this.user.id) {
         const newTotalComments = this.totalComments - 1;
         await deleteComment(this.delCommentId, this.delLolId, newTotalComments)
-        .then(() => {
-            this.$root.$emit('show-snackbar', {
-            content: 'Comment successfully deleted!',
-            color: 'success'
+          .then(() => {
+            this.$root.$emit("show-snackbar", {
+              content: "Comment successfully deleted!",
+              color: "success"
+            });
+          })
+          .catch(() => {
+            this.$root.$emit("show-snackbar", {
+              content: "Error deleting comment!",
+              color: "error"
+            });
           });
-        })
-        .catch(() => {
-          this.$root.$emit('show-snackbar', {
-            content: 'Error deleting comment!',
-            color: 'error'
-          });
-        });
       }
 
       this.delCommentId = "";

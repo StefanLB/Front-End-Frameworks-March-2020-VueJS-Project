@@ -61,20 +61,19 @@ export default {
       };
 
       const newTotalComments = this.totalComments + 1;
-      
       this.clear();
 
       addComment(commentData, newTotalComments)
         .then(() => {
-          this.$root.$emit('show-snackbar', {
-            content: 'Comment successfully added!',
-            color: 'success'
+          this.$root.$emit("show-snackbar", {
+            content: "Comment successfully added!",
+            color: "success"
           });
         })
         .catch(() => {
-          this.$root.$emit('show-snackbar', {
-            content: 'Error deleting comment!',
-            color: 'error'
+          this.$root.$emit("show-snackbar", {
+            content: "Error deleting comment!",
+            color: "error"
           });
         });
     },

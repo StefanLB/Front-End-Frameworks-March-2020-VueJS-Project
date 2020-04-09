@@ -7,37 +7,36 @@
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-xs-only" v-if="!userLoggedIn">
       <v-btn v-for="item in items" :key="item.title" :to="item.link">
-        <v-icon>{{item.icon}}</v-icon>
+        <v-icon class="icons">{{item.icon}}</v-icon>
         {{item.title}}
       </v-btn>
       <v-spacer></v-spacer>
     </v-toolbar-items>
     <v-toolbar-items class="hidden-xs-only" v-else>
-      <v-btn to="/user/profile">Hello, {{getDisplayName}}</v-btn>
+      <v-btn to="/user/profile">
+        <v-icon class="icons">mdi-account</v-icon>
+        Hello, {{getDisplayName}}
+      </v-btn>
       <v-menu open-on-hover close-on-content-click offset-y>
         <template v-slot:activator="{ on }">
-          <v-btn v-on="on">Navigate Lols</v-btn>
+          <v-btn v-on="on">
+            <v-icon class="icons">mdi-chevron-double-down</v-icon>Navigate Lols
+          </v-btn>
         </template>
-        <v-list>
-          <v-list-item>
-            <router-link to="/lols/add">
-              <v-list-item-title>ADD LOL</v-list-item-title>
-            </router-link>
+        <v-list dense>
+          <v-list-item @click="navigateTo('lols/add')">
+              <v-list-item-title ><v-icon small class="icons">mdi-image-plus</v-icon>ADD LOL</v-list-item-title>
           </v-list-item>
-          <v-list-item>
-            <router-link to="/user/lols">
-              <v-list-item-title>MY LOLS</v-list-item-title>
-            </router-link>
+          <v-list-item @click="navigateTo('/user/lols')">
+              <v-list-item-title><v-icon small class="icons">mdi-image-multiple</v-icon>MY LOLS</v-list-item-title>
           </v-list-item>
-          <v-list-item>
-            <router-link to="/">
-              <v-list-item-title>ALL LOLS</v-list-item-title>
-            </router-link>
+          <v-list-item @click="navigateTo('/')">
+              <v-list-item-title><v-icon small class="icons">mdi-image-search</v-icon>ALL LOLS</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
       <v-btn @click="logoutFromFirebase">
-        <v-icon>delete_sweep</v-icon>Logout
+        <v-icon class="icons">mdi-logout</v-icon>Logout
       </v-btn>
     </v-toolbar-items>
   </v-toolbar>
@@ -61,12 +60,12 @@ export default {
       let menuItems = [
         {
           title: "Register",
-          icon: "face",
+          icon: "mdi-account-plus",
           link: "/register"
         },
         {
           title: "Login",
-          icon: "no_encryption",
+          icon: "mdi-login",
           link: "/login"
         }
       ];
@@ -99,6 +98,9 @@ export default {
     },
     setDisplayName(newName) {
       this.updatedDisplayName = newName;
+    },
+    navigateTo(path) {
+      this.$router.push(path);
     }
   },
   beforeMount: function() {
@@ -136,5 +138,9 @@ export default {
   top: 0;
   width: 100%;
   z-index: 500;
+}
+
+.icons {
+  margin-right: 8px;
 }
 </style>

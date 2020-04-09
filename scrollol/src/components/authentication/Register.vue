@@ -4,7 +4,7 @@
       <v-flex>
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-card class="register-card">
-            <v-card-title>Register Form</v-card-title>
+            <v-card-title>Register</v-card-title>
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12 md6>
@@ -148,18 +148,18 @@ export default {
         password: this.password
       };
       await signUp(user)
-      .then(() => {
-            this.$root.$emit('show-snackbar', {
-            content: 'Registered successfully!',
-            color: 'success'
+        .then(() => {
+          this.$root.$emit("show-snackbar", {
+            content: "Registered successfully!",
+            color: "success"
           });
-      })
-      .catch(() => {
-            this.$root.$emit('show-snackbar', {
-            content: 'Error during registration!',
-            color: 'error'
+        })
+        .catch(() => {
+          this.$root.$emit("show-snackbar", {
+            content: "Error during registration!",
+            color: "error"
           });
-      });
+        });
     }
   }
 };
@@ -168,7 +168,7 @@ export default {
 <style scoped>
 .register-card {
   padding: 12px;
-  margin-top: 12px;
+  margin-top: 60px;
 }
 
 .reg-button {

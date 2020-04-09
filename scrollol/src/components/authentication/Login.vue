@@ -4,7 +4,7 @@
       <v-flex xs12 md8>
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-card class="login-card">
-            <v-card-title justify-center>Login Form</v-card-title>
+            <v-card-title justify-center>Login</v-card-title>
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12 md6>
