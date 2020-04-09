@@ -112,9 +112,21 @@ export default {
         photoURL: this.photoUrl
       };
 
-      this.$root.$emit('dname-changed', this.user.firstName);
+      this.$root.$emit("dname-changed", this.user.firstName);
 
-      await updateUser(user);
+      await updateUser(user).then(() => {
+        this.$root.$emit("show-snackbar", {
+          content: "Profile successfully updated!",
+          color: "success"
+        });
+      })
+      .catch(() => {
+        this.$root.$emit("show-snackbar", {
+          content: "Error updating profile!",
+          color: "error"
+        });
+      })
+
     }
   },
   created: function() {

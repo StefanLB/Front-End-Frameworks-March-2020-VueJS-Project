@@ -29,24 +29,10 @@ export default {
     changeLoaderState();
     this.$bind("lols", await getLols()).then(() => changeLoaderState());
   },
-  // mounted() {
-  //   this.scroll();
-  // },
   methods: {
     addFilter(category) {
       this.filterCategory = category;
     }
-    // async scroll() {
-    //   window.onscroll = async () => {
-    //     let bottomOfWindow =
-    //       document.documentElement.scrollTop + window.innerHeight ===
-    //       document.documentElement.offsetHeight;
-
-    //     if (bottomOfWindow) {
-    //       console.log('Reached bottom of window!');
-    //     }
-    //   };
-    // }
   }
 };
 </script>

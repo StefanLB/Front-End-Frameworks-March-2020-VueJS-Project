@@ -66,10 +66,16 @@ export default {
 
       addComment(commentData, newTotalComments)
         .then(() => {
-          console.log("Comment added successfully!");
+          this.$root.$emit('show-snackbar', {
+            content: 'Comment successfully added!',
+            color: 'success'
+          });
         })
-        .catch(function(error) {
-          console.log("Error adding comment!" + error);
+        .catch(() => {
+          this.$root.$emit('show-snackbar', {
+            content: 'Error deleting comment!',
+            color: 'error'
+          });
         });
     },
     clear() {

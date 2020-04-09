@@ -5,6 +5,7 @@
       <app-loader></app-loader>
       <router-view></router-view>
     </div>
+    <app-snackbar></app-snackbar>
     <app-footer></app-footer>
   </v-app>
 </template>
@@ -14,12 +15,14 @@
 import AppHeader from "./components/shared/Header.vue";
 import AppFooter from "./components/shared/Footer.vue";
 import AppLoader from "./components/shared/Loader.vue";
+import AppSnackbar from "./components/shared/Snackbar.vue";
 
 export default {
   components: {
     AppHeader,
     AppFooter,
-    AppLoader
+    AppLoader,
+    AppSnackbar
   }
 };
 </script>

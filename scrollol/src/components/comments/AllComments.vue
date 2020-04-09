@@ -35,7 +35,7 @@
 
 <script>
 import AppAddComment from "./AddComment";
-import AppDialog from "../dialogs/Dialog";
+import AppDialog from "../shared/Dialog";
 import { deleteComment } from "../../services/firestore.service";
 import firebase from "firebase/app";
 import moment from "moment";
@@ -89,14 +89,26 @@ export default {
       this.dialogData.confirmButtonName = "Delete Comment";
       this.dialogData.visible = true;
     },
-    delComment(confirmed) {
+    async delComment(confirmed) {
       if (!confirmed) {
         return;
       }
 
       if (this.delAddedById == this.user.id) {
         const newTotalComments = this.totalComments - 1;
-        deleteComment(this.delCommentId, this.delLolId, newTotalComments);
+        await deleteComment(this.delCommentId, this.delLolId, newTotalComments)
+        .then(() => {
+            this.$root.$emit('show-snackbar', {
+            content: 'Comment successfully deleted!',
+            color: 'success'
+          });
+        })
+        .catch(() => {
+          this.$root.$emit('show-snackbar', {
+            content: 'Error deleting comment!',
+            color: 'error'
+          });
+        });
       }
 
       this.delCommentId = "";

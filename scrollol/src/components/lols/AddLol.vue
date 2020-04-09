@@ -51,7 +51,7 @@ import { required, minLength, maxLength } from "vuelidate/lib/validators";
 import { helpers } from "vuelidate/lib/validators";
 import { addLol } from "../../services/firestore.service";
 import { getCategories } from "../../services/firestore.service";
-import AppDialog from "../dialogs/Dialog";
+import AppDialog from "../shared/Dialog";
 
 const urlsyntax = helpers.regex("urlsyntax", /^http[s]{0,1}:\/\/.*$/);
 
@@ -151,12 +151,19 @@ export default {
 
       addLol(lolData)
         .then(() => {
-          console.log("Lol successfully created!");
+          this.$root.$emit('show-snackbar', {
+            content: 'Lol successfully added!',
+            color: 'success'
+          });
+          
           this.clear();
           this.$router.push("/");
         })
-        .catch(function(error) {
-          console.log("Error creating Lol!" + error);
+        .catch(function() {
+          this.$root.$emit('show-snackbar', {
+            content: 'Error creating Lol!',
+            color: 'error'
+          });
         });
     },
     clear() {

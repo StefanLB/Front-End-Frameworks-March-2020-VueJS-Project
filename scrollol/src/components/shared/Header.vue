@@ -2,9 +2,7 @@
   <v-toolbar class="toolbar" extension-height="0" dense>
     <v-btn class="home-btn" to="/home">
       <v-icon class="mr-2">mdi-script-text-outline</v-icon>
-      <v-toolbar-title>
-        ScrolLol
-      </v-toolbar-title>
+      <v-toolbar-title>ScrolLol</v-toolbar-title>
     </v-btn>
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-xs-only" v-if="!userLoggedIn">
@@ -16,11 +14,7 @@
     </v-toolbar-items>
     <v-toolbar-items class="hidden-xs-only" v-else>
       <v-btn to="/user/profile">Hello, {{getDisplayName}}</v-btn>
-      <v-menu
-        open-on-hover
-        close-on-content-click
-        offset-y
-      >
+      <v-menu open-on-hover close-on-content-click offset-y>
         <template v-slot:activator="{ on }">
           <v-btn v-on="on">Navigate Lols</v-btn>
         </template>
@@ -59,7 +53,7 @@ export default {
     return {
       loggedIn: false,
       user: null,
-      updatedDisplayName: null,
+      updatedDisplayName: null
     };
   },
   computed: {
@@ -89,7 +83,19 @@ export default {
   },
   methods: {
     async logoutFromFirebase() {
-      await logOut();
+      await logOut()
+        .then(() => {
+          this.$root.$emit("show-snackbar", {
+            content: "Successfully logged out!",
+            color: "success"
+          });
+        })
+        .catch(() => {
+          this.$root.$emit("show-snackbar", {
+            content: "Error logging out!",
+            color: "error"
+          });
+        });
     },
     setDisplayName(newName) {
       this.updatedDisplayName = newName;

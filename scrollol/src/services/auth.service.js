@@ -36,8 +36,7 @@ export async function signUp(userdata) {
         .updateProfile({
           displayName: userdata.firstName,
           photoURL: userdata.photoUrl
-        })
-        .then(router.push("/"));
+        });
     })
     .finally(() => {
       changeLoaderState();
@@ -45,14 +44,9 @@ export async function signUp(userdata) {
 }
 
 export async function logOut() {
-  console.log(auth.currentUser);
-
   changeLoaderState();
   return await auth
     .signOut()
-    .then(() => {
-      router.push("/");
-    })
     .finally(() => {
       changeLoaderState();
     });
@@ -63,12 +57,8 @@ export async function signInGoogle() {
 
   auth
     .signInWithPopup(provider)
-    .then(function(result) {
-      console.log(result);
+    .then(function() {
       router.push("/");
-    })
-    .catch(() => {
-      console.log("Error Logging in!");
     });
 }
 

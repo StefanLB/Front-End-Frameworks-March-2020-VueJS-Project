@@ -11,7 +11,11 @@
 
           <v-btn color="red darken-1" text @click="closeAndReturnResult(false)">Cancel</v-btn>
 
-          <v-btn color="green darken-1" text @click="closeAndReturnResult(true)">{{data.confirmButtonName}}</v-btn>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="closeAndReturnResult(true)"
+          >{{data.confirmButtonName}}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -24,11 +28,9 @@ export default {
   props: {
     data: {
       visible: Boolean,
-      dialogData: {
-        title: "",
-        content: "",
-        confirmButtonName: ""
-      }
+      title: "",
+      content: "",
+      confirmButtonName: ""
     }
   },
   methods: {

@@ -147,7 +147,19 @@ export default {
         photoUrl: this.photoUrl,
         password: this.password
       };
-      await signUp(user);
+      await signUp(user)
+      .then(() => {
+            this.$root.$emit('show-snackbar', {
+            content: 'Registered successfully!',
+            color: 'success'
+          });
+      })
+      .catch(() => {
+            this.$root.$emit('show-snackbar', {
+            content: 'Error during registration!',
+            color: 'error'
+          });
+      });
     }
   }
 };

@@ -68,7 +68,7 @@ import { deleteLol } from "../../services/firestore.service";
 import { changeLoaderState } from "../../services/loader.service";
 import moment from "moment";
 import AppStats from "./Stats";
-import AppDialog from "../dialogs/Dialog";
+import AppDialog from "../shared/Dialog";
 
 export default {
   components: {
@@ -108,6 +108,17 @@ export default {
         .then(() => {
           this.clearStats();
           this.updateStats();
+
+          this.$root.$emit("show-snackbar", {
+            content: "Lol successfully deleted!",
+            color: "success"
+          });
+        })
+        .catch(() => {
+          this.$root.$emit("show-snackbar", {
+            content: "Error deleting Lol!",
+            color: "error"
+          });
         })
         .finally(changeLoaderState());
 
