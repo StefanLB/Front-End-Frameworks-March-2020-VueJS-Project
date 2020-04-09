@@ -1,41 +1,47 @@
 <template>
-  <v-toolbar class="toolbar" elevation=2 dense>
-    <v-btn dark elevation=1 class="home-btn" to="/home">
+  <v-toolbar class="toolbar" elevation="2" dense>
+    <v-btn dark elevation="1" class="home-btn" to="/home">
       <v-icon class="mr-2">mdi-script-text-outline</v-icon>
       <v-toolbar-title>ScrolLol</v-toolbar-title>
     </v-btn>
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-xs-only" v-if="!userLoggedIn">
-      <v-btn dark elevation=1 v-for="item in items" :key="item.title" :to="item.link">
+      <v-btn dark elevation="1" v-for="item in items" :key="item.title" :to="item.link">
         <v-icon class="icons">{{item.icon}}</v-icon>
         {{item.title}}
       </v-btn>
       <v-spacer></v-spacer>
     </v-toolbar-items>
     <v-toolbar-items class="hidden-xs-only" v-else>
-      <v-btn dark elevation=1 to="/user/profile">
+      <v-btn dark elevation="1" to="/user/profile">
         <v-icon class="icons">mdi-account</v-icon>
         Hello, {{getDisplayName}}
       </v-btn>
       <v-menu open-on-hover close-on-content-click offset-y>
         <template v-slot:activator="{ on }">
-          <v-btn dark elevation=1 v-on="on">
+          <v-btn dark elevation="1" v-on="on">
             <v-icon class="icons">mdi-chevron-double-down</v-icon>Navigate Lols
           </v-btn>
         </template>
         <v-list dense>
           <v-list-item @click="navigateTo('lols/add')">
-              <v-list-item-title class="theme" ><v-icon small class="icons theme">mdi-image-plus</v-icon>ADD LOL</v-list-item-title>
+            <v-list-item-title class="theme">
+              <v-icon small class="icons theme">mdi-image-plus</v-icon>ADD LOL
+            </v-list-item-title>
           </v-list-item>
           <v-list-item @click="navigateTo('/user/lols')">
-              <v-list-item-title class="theme"><v-icon small class="icons theme">mdi-image-multiple</v-icon>MY LOLS</v-list-item-title>
+            <v-list-item-title class="theme">
+              <v-icon small class="icons theme">mdi-image-multiple</v-icon>MY LOLS
+            </v-list-item-title>
           </v-list-item>
           <v-list-item @click="navigateTo('/')">
-              <v-list-item-title class="theme"><v-icon small class="icons theme">mdi-image-search</v-icon>ALL LOLS</v-list-item-title>
+            <v-list-item-title class="theme">
+              <v-icon small class="icons theme">mdi-image-search</v-icon>ALL LOLS
+            </v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
-      <v-btn dark elevation=1 @click="logoutFromFirebase">
+      <v-btn dark elevation="1" @click="logoutFromFirebase">
         <v-icon class="icons">mdi-logout</v-icon>Logout
       </v-btn>
     </v-toolbar-items>
@@ -127,7 +133,7 @@ export default {
 
 .theme--dark.v-btn:not(.v-btn--flat):not(.v-btn--text):not(.v-btn--outlined) {
   height: 46px;
-  background-color: #35A0AE;
+  background-color: #35a0ae;
 }
 
 .v-toolbar {
@@ -136,7 +142,7 @@ export default {
 
 ::v-deep .v-toolbar__content {
   padding: 0px;
-  background-color: #35A0AE;
+  background-color: #35a0ae;
 }
 
 .toolbar {
@@ -151,10 +157,10 @@ export default {
 }
 
 .theme {
-  color: #35A0AE;
+  color: #35a0ae;
 }
 
 .theme:hover {
-  color: #FFAA00;
+  color: #ffaa00;
 }
 </style>

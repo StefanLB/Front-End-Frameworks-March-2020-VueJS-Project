@@ -31,7 +31,7 @@ When creating a Lol *(post)*, the user provides details regarding it *(such as t
   * View all Lols *(posts)*;
   * Filter Lols by category;
   * View their added Lols;
-  * View a specific Lolâ€™s details;
+  * View a specific Lol’s details;
   * Like/Dislike Lols;
   * Post comments;
   * Delete their comments;
