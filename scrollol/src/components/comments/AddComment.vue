@@ -60,13 +60,13 @@ export default {
         lolId: this.$route.params.id
       };
 
-      const totalComments = this.totalComments + 1;
+      const newTotalComments = this.totalComments + 1;
+      
+      this.clear();
 
-      addComment(commentData, totalComments)
+      addComment(commentData, newTotalComments)
         .then(() => {
-          this.clear();
           console.log("Comment added successfully!");
-          this.updateComments();
         })
         .catch(function(error) {
           console.log("Error adding comment!" + error);
@@ -75,9 +75,6 @@ export default {
     clear() {
       this.$v.$reset();
       this.content = "";
-    },
-    updateComments() {
-      this.$emit("update-comments");
     }
   }
 };

@@ -1,33 +1,41 @@
 <template>
   <div>
-    <div v-for="comment of orderedComments" :key="comment.id">
-      <v-card class="d-inline-block mx-auto list-item comment">
-        <v-container>
-          <v-icon
-            v-if="userIsAuthor(comment.addedBy)"
-            small
-            class="del-btn"
-            @click="delComment(comment.id, comment.lolId, comment.addedBy)"
-          >mdi-trash-can</v-icon>
-          <div class="overline">By: {{comment.addedByName}}</div>
-          <v-row justify="space-between">
-            <v-col class="comment-content" cols="auto">
-              <v-card-text>{{comment.content}}</v-card-text>
-            </v-col>
-            <v-col cols="auto" class="text-center pl-0"></v-col>
-          </v-row>
-          <div class="overline">Posted: {{formatDate(comment.addedOn)}}</div>
-        </v-container>
-      </v-card>
-      <v-divider></v-divider>
+    <div v-if="comments">
+      <div v-for="comment of comments" :key="comment.id">
+        <v-card class="d-inline-block mx-auto list-item comment">
+          <v-container>
+            <v-icon
+              v-if="userIsAuthor(comment.addedBy)"
+              small
+              class="del-btn"
+              @click="openConfirmDialog(comment.id, comment.lolId, comment.addedBy)"
+            >mdi-trash-can</v-icon>
+            <div class="overline">By: {{comment.addedByName}}</div>
+            <v-row justify="space-between">
+              <v-col class="comment-content" cols="auto">
+                <v-card-text>{{comment.content}}</v-card-text>
+              </v-col>
+              <v-col cols="auto" class="text-center pl-0"></v-col>
+            </v-row>
+            <div class="overline">Posted: {{formatDate(comment.addedOn)}}</div>
+          </v-container>
+        </v-card>
+        <v-divider></v-divider>
+      </div>
+      <app-dialog :data="dialogData" @dialog-result="delComment"></app-dialog>
     </div>
-    <app-add-comment @update-comments="updateComments" :totalComments="totalComments"></app-add-comment>
+    <div v-else class="no-comments">
+      <div>No comments yet.</div>
+      <div>Be the first to comment!</div>
+    </div>
+    <app-add-comment :totalComments="totalComments"></app-add-comment>
   </div>
 </template>
 
 
 <script>
 import AppAddComment from "./AddComment";
+import AppDialog from "../dialogs/Dialog";
 import { deleteComment } from "../../services/firestore.service";
 import firebase from "firebase/app";
 import moment from "moment";
@@ -35,41 +43,65 @@ import moment from "moment";
 export default {
   name: "AllComments",
   components: {
-    AppAddComment
+    AppAddComment,
+    AppDialog
   },
   data() {
     return {
       user: {
         id: String
       },
-      totalComments: this.comments?.length
+      delCommentId: "",
+      delCommentLolId: "",
+      delAddedById: "",
+      dialogData: {
+        visible: false,
+        title: "",
+        content: "",
+        confirmButtonName: ""
+      }
     };
   },
   computed: {
-    orderedComments() {
-      return this.comments?.sort((a, b) => a.addedOn > b.addedOn ? 1 : b.addedOn > a.addedOn ? -1 : 0);
+    totalComments() {
+      if(this.comments){
+        return this.comments.length;
+      }
+
+      return 0;
     }
   },
   props: {
-    comments: Array
+    comments: null
   },
   methods: {
     formatDate(timestamp) {
       return moment(timestamp.seconds * 1000, "x").fromNow();
     },
-    delComment(commentId, lolId, creatorId) {
-      if (creatorId == this.user.id) {
-        const newTotalComments = this.totalComments - 1;
-        deleteComment(commentId, lolId, newTotalComments);
-        this.updateComments();
-      }
-    },
-    updateComments() {
-      this.orderedComments = this.comments?.sort((a, b) =>
-        a.addedOn > b.addedOn ? 1 : b.addedOn > a.addedOn ? -1 : 0
-      );
+    openConfirmDialog(commentId, lolId, creatorId) {
+      this.delCommentId = commentId;
+      this.delLolId = lolId;
+      this.delAddedById = creatorId;
 
-      this.totalComments = this.comments?.length;
+      this.dialogData.title = "Confirm Delete";
+      this.dialogData.content =
+        "Are you sure you want to delete this comment? Note that this action cannot be undone.";
+      this.dialogData.confirmButtonName = "Delete Comment";
+      this.dialogData.visible = true;
+    },
+    delComment(confirmed) {
+      if (!confirmed) {
+        return;
+      }
+
+      if (this.delAddedById == this.user.id) {
+        const newTotalComments = this.totalComments - 1;
+        deleteComment(this.delCommentId, this.delLolId, newTotalComments);
+      }
+
+      this.delCommentId = "";
+      this.delLolId = "";
+      this.delAddedById = "";
     },
     userIsAuthor(addedBy) {
       return addedBy == this.user.id;
@@ -125,5 +157,10 @@ a {
 
 .del-btn:hover {
   color: #b71c1c;
+}
+
+.no-comments {
+  text-align: center;
+  color: red;
 }
 </style>
