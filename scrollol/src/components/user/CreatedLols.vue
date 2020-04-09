@@ -9,7 +9,10 @@
           <div class="added-format">Added: {{formatDate(lol.createdOn)}}</div>
           <template v-slot:actions>
             <v-icon color="primary" class="mr-2">mdi-chevron-down-circle</v-icon>
-            <v-icon color="error" @click.stop="delLol(lol.id, lol.addedBy)">mdi-close-circle</v-icon>
+            <v-icon
+              color="error"
+              @click.stop="openConfirmDialog(lol.id, lol.addedBy)"
+            >mdi-close-circle</v-icon>
           </template>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
@@ -55,6 +58,7 @@
       </v-expansion-panel>
     </v-expansion-panels>
     <div v-else>It seems that you haven't submitted any lols yet... go ahead and do so!</div>
+    <app-dialog :data="dialogData" @dialog-result="delLol"></app-dialog>
   </div>
 </template>
 
@@ -64,10 +68,12 @@ import { deleteLol } from "../../services/firestore.service";
 import { changeLoaderState } from "../../services/loader.service";
 import moment from "moment";
 import AppStats from "./Stats";
+import AppDialog from "../dialogs/Dialog";
 
 export default {
   components: {
-    AppStats
+    AppStats,
+    AppDialog
   },
   data: () => ({
     lols: [],
@@ -77,37 +83,62 @@ export default {
       likes: 0,
       dislikes: 0,
       comments: 0
+    },
+    delLolId: "",
+    delAddedById: "",
+    dialogData: {
+      visible: false,
+      title: "",
+      content: "",
+      confirmButtonName: ""
     }
   }),
   methods: {
     formatDate(timestamp) {
       return moment(timestamp.seconds * 1000, "x").fromNow();
     },
-    async delLol(lolId, addedById) {
+    async delLol(confirmed) {
+      if (!confirmed) {
+        return;
+      }
+
       changeLoaderState();
 
-      await deleteLol(lolId, addedById)
-      .then(() => {
+      await deleteLol(this.delLolId, this.delAddedById)
+        .then(() => {
           this.clearStats();
           this.updateStats();
-      })
-      .finally(changeLoaderState());
+        })
+        .finally(changeLoaderState());
+
+      this.delLolId = "";
+      this.delAddedById = "";
     },
     clearStats() {
-        this.totals.posts = 0;
-        this.totals.likes = 0;
-        this.totals.dislikes = 0;
-        this.totals.points = 0;
-        this.totals.comments = 0;
+      this.totals.posts = 0;
+      this.totals.likes = 0;
+      this.totals.dislikes = 0;
+      this.totals.points = 0;
+      this.totals.comments = 0;
     },
     updateStats() {
-        this.totals.posts = this.lols.length;
-        this.lols.forEach(l => {
-          this.totals.likes += l.likes.length;
-          this.totals.dislikes += l.dislikes.length;
-          this.totals.points += l.likes.length - l.dislikes.length;
-          this.totals.comments += l.comments;
-    });
+      this.totals.posts = this.lols.length;
+      this.lols.forEach(l => {
+        this.totals.likes += l.likes.length;
+        this.totals.dislikes += l.dislikes.length;
+        this.totals.points += l.likes.length - l.dislikes.length;
+        this.totals.comments += l.comments;
+      });
+    },
+    openConfirmDialog(lolId, addedById) {
+      this.delLolId = lolId;
+      this.delAddedById = addedById;
+
+      this.dialogData.title = "Confirm Delete";
+      this.dialogData.content =
+        "Are you sure you want to delete this Lol? Note that this action cannot be undone and it will also affect your stats.";
+      this.dialogData.confirmButtonName = "Delete Lol";
+      this.dialogData.visible = true;
     }
   },
   mounted: async function() {
@@ -115,7 +146,7 @@ export default {
     this.$bind("lols", await getUserLols())
       .then(() => {
         this.updateStats();
-        })
+      })
       .finally(() => {
         changeLoaderState();
       });

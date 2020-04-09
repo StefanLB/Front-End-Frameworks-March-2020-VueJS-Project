@@ -21,11 +21,6 @@
 <script>
 export default {
   name: "Dialog",
-  data() {
-    return {
-      dialog: false
-    };
-  },
   props: {
     data: {
       visible: Boolean,
