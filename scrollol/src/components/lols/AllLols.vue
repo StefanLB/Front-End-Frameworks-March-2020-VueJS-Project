@@ -117,7 +117,7 @@ export default {
       } else {
         this.$root.$emit("show-snackbar", {
           content: "You need to be logged-in in order to vote!",
-          color: "error"
+          color: "info"
         });
       }
     },
@@ -138,7 +138,7 @@ export default {
       } else {
         this.$root.$emit("show-snackbar", {
           content: "You need to be logged-in in order to vote!",
-          color: "error"
+          color: "info"
         });
       }
     },
@@ -148,7 +148,7 @@ export default {
       } else {
         this.$root.$emit("show-snackbar", {
           content: "Only logged-in users can comment and view post details!",
-          color: "error"
+          color: "info"
         });
       }
     }
