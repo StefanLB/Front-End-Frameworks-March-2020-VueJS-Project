@@ -26,8 +26,8 @@
         </template>
         <v-list>
           <v-list-item>
-            <router-link to="/">
-              <v-list-item-title>ALL LOLS</v-list-item-title>
+            <router-link to="/lols/add">
+              <v-list-item-title>ADD LOL</v-list-item-title>
             </router-link>
           </v-list-item>
           <v-list-item>
@@ -36,8 +36,8 @@
             </router-link>
           </v-list-item>
           <v-list-item>
-            <router-link to="/lols/add">
-              <v-list-item-title>CREATE LOL</v-list-item-title>
+            <router-link to="/">
+              <v-list-item-title>ALL LOLS</v-list-item-title>
             </router-link>
           </v-list-item>
         </v-list>

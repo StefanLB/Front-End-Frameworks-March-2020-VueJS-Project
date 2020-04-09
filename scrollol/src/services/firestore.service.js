@@ -97,7 +97,7 @@ export function removeDislike(lolId, dislikes, userId) {
 }
 
 export function getLols() {
-  return firestore.collection("lols").orderBy("createdOn", "desc").limit(5);
+  return firestore.collection("lols").orderBy("createdOn", "desc");
 }
 
 export async function getUserLols() {

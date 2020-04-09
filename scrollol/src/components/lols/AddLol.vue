@@ -38,9 +38,10 @@
         @blur="$v.category.$touch()"
       ></v-select>
 
-      <v-btn class="mr-4" :disabled="!valid" color="success" @click="submit">submit</v-btn>
+      <v-btn class="mr-4" :disabled="!valid" color="success" @click="validateAndOpenDialog">submit</v-btn>
       <v-btn @click="clear" color="error">clear</v-btn>
     </v-form>
+    <app-dialog :data="dialogData" @dialog-result="submit"></app-dialog>
   </div>
 </template>
 
@@ -50,11 +51,15 @@ import { required, minLength, maxLength } from "vuelidate/lib/validators";
 import { helpers } from "vuelidate/lib/validators";
 import { addLol } from "../../services/firestore.service";
 import { getCategories } from "../../services/firestore.service";
+import AppDialog from "../dialogs/Dialog";
 
 const urlsyntax = helpers.regex("urlsyntax", /^http[s]{0,1}:\/\/.*$/);
 
 export default {
   mixins: [validationMixin],
+  components: {
+    AppDialog
+  },
   validations: {
     title: { required, minLength: minLength(3), maxLength: maxLength(30) },
     description: {
@@ -71,7 +76,13 @@ export default {
     imageUrl: "",
     category: null,
     categories: [],
-    valid: true
+    valid: true,
+    dialogData: {
+      visible: false,
+      title: "",
+      content: "",
+      confirmButtonName: ""
+    }
   }),
   computed: {
     categoryErrors() {
@@ -110,33 +121,43 @@ export default {
     }
   },
   methods: {
-    submit() {
+    validateAndOpenDialog() {
       this.$v.$touch();
 
       if (!this.$v.$invalid) {
-        const currentDate = new Date();
-        const lolData = {
-          title: this.title,
-          description: this.description,
-          imageUrl: this.imageUrl,
-          category: this.category,
-          likes: [],
-          dislikes: [],
-          comments: 0,
-          createdOn: currentDate,
-          updatedOn: currentDate
-        };
-
-        addLol(lolData)
-          .then(() => {
-            console.log("Lol successfully created!");
-            this.clear();
-            this.$router.push("/");
-          })
-          .catch(function(error) {
-            console.log("Error creating Lol!" + error);
-          });
+        this.dialogData.title = 'Confirm Post';
+        this.dialogData.content = 'Are you sure you want to post this Lol? Note that you can manage your Lols via the "My Lols" section under "Navigate Lols".';
+        this.dialogData.confirmButtonName = 'Add Lol'
+        this.dialogData.visible = true;
       }
+    },
+    submit(confirmed) {
+      if (!confirmed) {
+        return;
+      }
+
+      const currentDate = new Date();
+      const lolData = {
+        title: this.title,
+        description: this.description,
+        imageUrl: this.imageUrl,
+        category: this.category,
+        likes: [],
+        dislikes: [],
+        comments: 0,
+        createdOn: currentDate,
+        updatedOn: currentDate
+      };
+
+      addLol(lolData)
+        .then(() => {
+          console.log("Lol successfully created!");
+          this.clear();
+          this.$router.push("/");
+        })
+        .catch(function(error) {
+          console.log("Error creating Lol!" + error);
+        });
     },
     clear() {
       this.$v.$reset();
