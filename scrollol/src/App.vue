@@ -31,9 +31,6 @@ export default {
 .app-body {
   margin-bottom: 120px;
   margin-top: 51px;
-}
-
-.v-toolbar__extension {
-  padding: 0px !important;
+  padding: 0px;
 }
 </style>

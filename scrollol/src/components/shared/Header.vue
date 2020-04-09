@@ -129,8 +129,8 @@ export default {
   flex: 0;
 }
 
-/deep/ .v-toolbar__content {
-  padding: 0px !important;
+::v-deep .v-toolbar__content {
+  padding: 0px;
 }
 
 .toolbar {

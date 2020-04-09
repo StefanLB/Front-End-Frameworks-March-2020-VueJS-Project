@@ -125,9 +125,10 @@ export default {
       this.$v.$touch();
 
       if (!this.$v.$invalid) {
-        this.dialogData.title = 'Confirm Post';
-        this.dialogData.content = 'Are you sure you want to post this Lol? Note that you can manage your Lols via the "My Lols" section under "Navigate Lols".';
-        this.dialogData.confirmButtonName = 'Add Lol'
+        this.dialogData.title = "Confirm Post";
+        this.dialogData.content =
+          'Are you sure you want to post this Lol? Note that you can manage your Lols via the "My Lols" section under "Navigate Lols".';
+        this.dialogData.confirmButtonName = "Add Lol";
         this.dialogData.visible = true;
       }
     },
@@ -151,18 +152,18 @@ export default {
 
       addLol(lolData)
         .then(() => {
-          this.$root.$emit('show-snackbar', {
-            content: 'Lol successfully added!',
-            color: 'success'
+          this.$root.$emit("show-snackbar", {
+            content: "Lol successfully added!",
+            color: "success"
           });
-          
+
           this.clear();
           this.$router.push("/");
         })
         .catch(function() {
-          this.$root.$emit('show-snackbar', {
-            content: 'Error creating Lol!',
-            color: 'error'
+          this.$root.$emit("show-snackbar", {
+            content: "Error creating Lol!",
+            color: "error"
           });
         });
     },

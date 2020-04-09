@@ -108,7 +108,7 @@ export default {
     phoneRules: [
       v => !!v || "Phone number is required",
       v =>
-        /^\+[0-9]+$/.test(v) ||
+        /^\+[0-9 ]+$/.test(v) ||
         "Phone number must start with '+' and contain only digits after."
     ],
     photoUrl: "",

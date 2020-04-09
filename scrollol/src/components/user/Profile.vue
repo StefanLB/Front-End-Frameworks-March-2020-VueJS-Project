@@ -87,7 +87,7 @@ export default {
     phoneRules: [
       v => !!v || "Phone number is required",
       v =>
-        /^\+[0-9]+$/.test(v) ||
+        /^\+[0-9 ]+$/.test(v) ||
         "Phone number must start with '+' and contain only digits after."
     ],
     photoUrl: null,
@@ -114,19 +114,19 @@ export default {
 
       this.$root.$emit("dname-changed", this.user.firstName);
 
-      await updateUser(user).then(() => {
-        this.$root.$emit("show-snackbar", {
-          content: "Profile successfully updated!",
-          color: "success"
+      await updateUser(user)
+        .then(() => {
+          this.$root.$emit("show-snackbar", {
+            content: "Profile successfully updated!",
+            color: "success"
+          });
+        })
+        .catch(() => {
+          this.$root.$emit("show-snackbar", {
+            content: "Error updating profile!",
+            color: "error"
+          });
         });
-      })
-      .catch(() => {
-        this.$root.$emit("show-snackbar", {
-          content: "Error updating profile!",
-          color: "error"
-        });
-      })
-
     }
   },
   created: function() {

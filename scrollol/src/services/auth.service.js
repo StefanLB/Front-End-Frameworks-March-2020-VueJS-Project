@@ -32,11 +32,10 @@ export async function signUp(userdata) {
       await setUserData(data);
     })
     .then(async () => {
-      auth.currentUser
-        .updateProfile({
-          displayName: userdata.firstName,
-          photoURL: userdata.photoUrl
-        });
+      auth.currentUser.updateProfile({
+        displayName: userdata.firstName,
+        photoURL: userdata.photoUrl
+      });
     })
     .finally(() => {
       changeLoaderState();
@@ -45,21 +44,17 @@ export async function signUp(userdata) {
 
 export async function logOut() {
   changeLoaderState();
-  return await auth
-    .signOut()
-    .finally(() => {
-      changeLoaderState();
-    });
+  return await auth.signOut().finally(() => {
+    changeLoaderState();
+  });
 }
 
 export async function signInGoogle() {
   const provider = new authGoogle.GoogleAuthProvider();
 
-  auth
-    .signInWithPopup(provider)
-    .then(function() {
-      router.push("/");
-    });
+  auth.signInWithPopup(provider).then(function() {
+    router.push("/");
+  });
 }
 
 export async function updateUser(userdata) {

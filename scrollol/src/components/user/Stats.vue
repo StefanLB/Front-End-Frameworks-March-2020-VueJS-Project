@@ -48,7 +48,7 @@ export default {
         icon: "mdi-message-reply-text",
         color: "#0D47A1"
       }
-    ],
+    ]
   }),
   props: {
     totals: {

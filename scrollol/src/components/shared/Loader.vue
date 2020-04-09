@@ -1,5 +1,5 @@
 <template>
-  <v-progress-linear 
+  <v-progress-linear
     v-if="state"
     :indeterminate="true"
     class="ma-0 loader-indeterminate"

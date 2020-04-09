@@ -144,7 +144,7 @@ export default {
     },
     viewLolDetails(lolId) {
       if (this.user.loggedIn) {
-        window.open("/lols/details/" + lolId, '_blank');
+        window.open("/lols/details/" + lolId, "_blank");
       } else {
         this.$root.$emit("show-snackbar", {
           content: "Only logged-in users can comment and view post details!",
@@ -168,15 +168,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// .color {
-//   background: linear-gradient(to bottom, #2980b9, #6dd5fa, #a5def3);
-//   width: 1%;
-//   height: inherit;
-//   float: left;
-// }
-
 .list {
-  //   float: right;
   width: 98%;
 }
 
