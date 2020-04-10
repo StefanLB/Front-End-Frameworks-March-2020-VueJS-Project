@@ -4,27 +4,27 @@
       <v-card-title class="soc-icon">
         <v-btn class="mx-4" dark icon>
           <a class="soc-icon" href="https://www.facebook.com/">
-            <v-icon size="32px">fab fa-facebook</v-icon>
+            <v-icon size="32px">mdi-facebook</v-icon>
           </a>
         </v-btn>
         <v-btn class="mx-4" dark icon>
           <a class="soc-icon" href="https://www.twitter.com/">
-            <v-icon size="32px">fab fa-twitter</v-icon>
+            <v-icon size="32px">mdi-twitter</v-icon>
           </a>
         </v-btn>
         <v-btn class="mx-4" dark icon>
           <a class="soc-icon" href="https://github.com/StefanLB/">
-            <v-icon size="32px">fab fa-github</v-icon>
+            <v-icon size="32px">mdi-github</v-icon>
           </a>
         </v-btn>
         <v-btn class="mx-4" dark icon>
           <a class="soc-icon" href="https://www.linkedin.com/">
-            <v-icon size="32px">fab fa-linkedin</v-icon>
+            <v-icon size="32px">mdi-linkedin</v-icon>
           </a>
         </v-btn>
         <v-btn class="mx-4" dark icon>
           <a class="soc-icon" href="https://www.instagram.com/">
-            <v-icon size="32px">fab fa-instagram</v-icon>
+            <v-icon size="32px">mdi-instagram</v-icon>
           </a>
         </v-btn>
       </v-card-title>

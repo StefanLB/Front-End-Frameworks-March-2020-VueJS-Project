@@ -24,7 +24,7 @@
           </v-btn>
         </template>
         <v-list dense>
-          <v-list-item @click="navigateTo('lols/add')">
+          <v-list-item @click="navigateTo('/lols/add')">
             <v-list-item-title class="theme">
               <v-icon small class="icons theme">mdi-image-plus</v-icon>ADD LOL
             </v-list-item-title>

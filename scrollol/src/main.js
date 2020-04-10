@@ -2,8 +2,6 @@ import Vue from 'vue'
 import { firestorePlugin } from 'vuefire'
 import './firebase'
 import vuetify from './plugins/vuetify'
-import '@fortawesome/fontawesome-free/css/all.css'
-import '@fortawesome/fontawesome-free/js/all.js'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 import {router} from './router'

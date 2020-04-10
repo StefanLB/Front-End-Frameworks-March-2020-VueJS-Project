@@ -6,7 +6,7 @@
         <v-card-title>Contact Us</v-card-title>
         <v-card-text>Below are our contact details</v-card-text>
     </v-card-title>
-    <v-img src="../assets/contact.png" alt="contact"></v-img>
+    <v-img src="../assets/contact.jpg" alt="contact"></v-img>
     <v-card-text>
         <p class="contact-info">
             <v-icon>phone</v-icon> <span class="contactInfo">+359 888 123 456</span>
